@@ -1,0 +1,2383 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wooncoop wireframe v2 — bewoner-flow</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Karma:wght@400;500;600;700&family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f4f4f2;
+    --surface: #ffffff;
+    --ink: #1a1a1a;
+    --ink-soft: #555;
+    --ink-muted: #888;
+    --line: #d8d8d3;
+    --line-soft: #eaeae5;
+    --accent: #2b3a55;
+    --accent-soft: #e7ebf2;
+    --note: #fff3a8;
+    --note-ink: #6b5b00;
+    --warn: #b34a3a;
+    /* Wooncoop huisstijl-tokens (uit live site + calculator) */
+    --wc-red: #DA291C;
+    --wc-red-dark: #B81F14;
+    --wc-mint: #D6E3DE;
+    --wc-sage: #9AB9AD;
+    --wc-forest: #375046;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: "Karma", Georgia, "Times New Roman", serif;
+    background: var(--bg);
+    color: var(--ink);
+    font-size: 16px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    line-height: 1.2;
+  }
+  .logo, .btn, .tab-btn, .role-tab-btn, .chip, .stat-num, .stat-mini .stat-num,
+  .hero-quote, .zone-tag, .role-card h3, .driver h4, .meta, .available,
+  .step-when, .when, .nums, .crumbs, .vibe-time, .stat-label, .price-small,
+  .step-num, .role-num, .compare-col h5, .stat-block h5, .meet-bewoners h4,
+  .step .step-when, .prak-item .label, .prak-item .value, .invest-option h5,
+  .invest-option .return, .unit h4 {
+    font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  }
+  .btn, .chip, .role-tab-btn, .tab-btn, .stat-block h5, .compare-col h5,
+  .zone-tag, .available, .step-when, .when, .crumbs, .prak-item .label,
+  .invest-option h5 {
+    letter-spacing: 0.02em;
+  }
+  .zone-tag, .available, .step-when, .when, .prak-item .label,
+  .compare-col h5, .stat-block h5, .invest-option h5, .meet-bewoners h4 {
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  .control-bar, .control-bar * {
+    font-family: "Montserrat", -apple-system, BlinkMacSystemFont, sans-serif;
+  }
+  p, li, blockquote { font-family: inherit; }
+  strong, b { font-weight: 600; }
+
+  /* ===== Control bar ===== */
+  .control-bar {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--ink);
+    color: #fff;
+    padding: 14px 24px;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    font-size: 13px;
+    border-bottom: 1px solid #000;
+  }
+  .control-bar .label {
+    font-weight: 600;
+    letter-spacing: 0.02em;
+  }
+  .control-bar .sub {
+    color: #aaa;
+    font-size: 12px;
+  }
+  .tabs {
+    display: flex;
+    gap: 8px;
+    margin-left: auto;
+  }
+  .tab-btn {
+    background: transparent;
+    border: 1px solid #444;
+    color: #ddd;
+    padding: 6px 14px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 13px;
+    font-family: inherit;
+  }
+  .tab-btn.active {
+    background: #fff;
+    color: var(--ink);
+    border-color: #fff;
+  }
+  .toggle-wrap {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-left: 12px;
+    font-size: 12px;
+    color: #ddd;
+  }
+  .toggle-wrap input { cursor: pointer; }
+
+  /* ===== Page container ===== */
+  .page {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 32px 24px 80px;
+    display: none;
+  }
+  .page.active { display: block; }
+
+  /* ===== Wireframe website header ===== */
+  .site-header {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    padding: 18px 28px;
+    display: flex;
+    align-items: center;
+    gap: 28px;
+    margin-bottom: 24px;
+  }
+  .logo {
+    font-weight: 700;
+    font-size: 18px;
+    letter-spacing: -0.01em;
+  }
+  .logo .underscores { color: var(--ink-muted); }
+  .site-nav {
+    display: flex;
+    gap: 22px;
+    font-size: 14px;
+  }
+  .site-nav a {
+    color: var(--ink-soft);
+    text-decoration: none;
+  }
+  .site-nav a.active {
+    color: var(--ink);
+    font-weight: 600;
+    border-bottom: 2px solid var(--ink);
+    padding-bottom: 2px;
+  }
+  .header-right {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    font-size: 13px;
+    color: var(--ink-soft);
+  }
+  .header-right a {
+    color: var(--ink);
+    text-decoration: none;
+    border: 1px solid var(--line);
+    padding: 6px 12px;
+    border-radius: 4px;
+  }
+
+  /* ===== Zone block ===== */
+  .zone {
+    position: relative;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    padding: 36px;
+    margin-bottom: 20px;
+  }
+  .zone-tag {
+    position: absolute;
+    top: -10px;
+    left: 24px;
+    background: var(--ink);
+    color: #fff;
+    font-size: 11px;
+    padding: 3px 10px;
+    border-radius: 3px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  /* ===== Annotation ===== */
+  .annot {
+    display: none;
+    margin-top: 14px;
+    padding: 12px 14px;
+    background: var(--note);
+    color: var(--note-ink);
+    border-left: 3px solid #c9a93a;
+    font-size: 13px;
+    line-height: 1.5;
+    border-radius: 0 4px 4px 0;
+  }
+  .annot strong { color: #4a3f00; }
+  .annot .quote {
+    font-style: italic;
+    display: block;
+    margin-top: 4px;
+    color: #5a4e00;
+  }
+  body.show-annot .annot { display: block; }
+
+  /* ===== Hero (Homepage) ===== */
+  .hero {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 36px;
+    align-items: center;
+  }
+  .hero-image {
+    aspect-ratio: 4/3;
+    background: linear-gradient(135deg, #d8dde6 0%, #c5cdd9 100%);
+    border-radius: 4px;
+    display: flex;
+    align-items: flex-end;
+    padding: 18px;
+    color: var(--ink-soft);
+    font-size: 12px;
+  }
+  .hero-image .badge {
+    background: rgba(255,255,255,0.85);
+    padding: 4px 10px;
+    border-radius: 3px;
+    font-size: 11px;
+  }
+  .hero-quote {
+    font-size: 28px;
+    line-height: 1.35;
+    font-weight: 500;
+    color: var(--ink);
+    margin: 0 0 18px;
+  }
+  .hero-quote::before { content: "\201C"; color: var(--ink-muted); margin-right: 4px; }
+  .hero-quote::after { content: "\201D"; color: var(--ink-muted); margin-left: 2px; }
+  .hero-attrib {
+    font-size: 14px;
+    color: var(--ink-soft);
+    margin-bottom: 22px;
+  }
+  .hero-attrib strong { color: var(--ink); }
+  .hero-cta-row {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+  }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 11px 20px;
+    border: 1px solid var(--wc-red);
+    background: var(--wc-red);
+    color: #fff;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+    border-radius: 3px;
+    cursor: pointer;
+    font-family: inherit;
+    transition: background 0.15s, border-color 0.15s;
+  }
+  .btn:hover { background: var(--wc-red-dark); border-color: var(--wc-red-dark); }
+  .btn-ghost {
+    background: transparent;
+    color: var(--ink);
+    border-color: var(--ink);
+  }
+  .btn-ghost:hover { background: var(--ink); color: #fff; }
+  .btn-soft {
+    background: transparent;
+    color: var(--ink);
+    border-color: var(--line);
+  }
+  .btn-soft:hover { border-color: var(--ink); }
+
+  /* ===== Drie ingangen ===== */
+  .role-row {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr 1fr;
+    gap: 16px;
+    align-items: stretch;
+  }
+  .role-intro {
+    font-size: 14px;
+    color: var(--ink-soft);
+    align-self: center;
+  }
+  .role-card {
+    border: 1px solid var(--line);
+    padding: 20px;
+    background: var(--surface);
+    text-decoration: none;
+    color: var(--ink);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .role-card .role-label {
+    font-size: 11px;
+    color: var(--ink-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .role-card h3 {
+    margin: 0;
+    font-size: 17px;
+  }
+  .role-card p {
+    margin: 0;
+    font-size: 13px;
+    color: var(--ink-soft);
+  }
+  .role-card .arrow {
+    margin-top: auto;
+    color: var(--ink);
+    font-size: 13px;
+  }
+
+  /* ===== Projecten ===== */
+  .projects {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+  }
+  .project-card {
+    border: 1px solid var(--line);
+    background: var(--surface);
+    overflow: hidden;
+  }
+  .project-img {
+    aspect-ratio: 16/10;
+    background: linear-gradient(135deg, #c8d3c9 0%, #aab8ad 100%);
+  }
+  .project-body {
+    padding: 14px 16px;
+  }
+  .project-body h4 {
+    margin: 0 0 4px;
+    font-size: 15px;
+  }
+  .project-body .meta {
+    font-size: 12px;
+    color: var(--ink-muted);
+    display: flex;
+    gap: 10px;
+  }
+  .project-body .status {
+    color: var(--ink-soft);
+  }
+
+  /* ===== Persoonlijk contact ===== */
+  .contact-card {
+    display: grid;
+    grid-template-columns: 100px 1fr auto;
+    gap: 24px;
+    align-items: center;
+    padding: 24px 28px;
+    background: var(--accent-soft);
+    border-radius: 4px;
+  }
+  .avatar {
+    width: 100px;
+    height: 100px;
+    background: linear-gradient(135deg, #cdd5e1, #b7c0cf);
+    border-radius: 50%;
+  }
+  .contact-card h4 {
+    margin: 0 0 4px;
+    font-size: 17px;
+  }
+  .contact-card .role {
+    font-size: 13px;
+    color: var(--ink-soft);
+    margin-bottom: 10px;
+  }
+  .contact-card .details {
+    font-size: 13px;
+    color: var(--ink);
+  }
+  .contact-card .details span {
+    color: var(--ink-muted);
+    margin-right: 6px;
+  }
+  .contact-card .available {
+    font-size: 12px;
+    color: var(--ink-soft);
+    margin-top: 4px;
+  }
+
+  /* ===== Stats split ===== */
+  .stats-split {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+  }
+  .stat-block {
+    border: 1px solid var(--line);
+    padding: 24px;
+    background: var(--surface);
+  }
+  .stat-block h5 {
+    margin: 0 0 14px;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--ink-muted);
+  }
+  .stat-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+  }
+  .stat-item {
+    border-left: 2px solid var(--line);
+    padding-left: 14px;
+  }
+  .stat-num {
+    font-size: 28px;
+    font-weight: 600;
+    line-height: 1;
+  }
+  .stat-label {
+    font-size: 12px;
+    color: var(--ink-soft);
+    margin-top: 4px;
+  }
+
+  /* ===== Section heading ===== */
+  h2.section {
+    font-size: 22px;
+    margin: 0 0 8px;
+    letter-spacing: -0.01em;
+  }
+  .section-sub {
+    font-size: 14px;
+    color: var(--ink-soft);
+    margin: 0 0 24px;
+  }
+
+  /* ===== Bewoner-landing specifiek ===== */
+  .landing-hero h1 {
+    font-size: 36px;
+    margin: 0 0 12px;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+  }
+  .landing-hero .lead {
+    font-size: 17px;
+    color: var(--ink-soft);
+    margin: 0 0 20px;
+    max-width: 640px;
+  }
+  .landing-hero .proof {
+    border-left: 3px solid var(--ink);
+    padding: 14px 18px;
+    background: var(--surface);
+    font-size: 15px;
+    margin: 24px 0 0;
+    max-width: 720px;
+  }
+  .landing-hero .proof .who {
+    display: block;
+    font-size: 13px;
+    color: var(--ink-muted);
+    margin-top: 6px;
+  }
+
+  /* ===== Journey timeline ===== */
+  .journey {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    position: relative;
+  }
+  .journey::before {
+    content: "";
+    position: absolute;
+    top: 26px;
+    left: 4%;
+    right: 4%;
+    height: 2px;
+    background: var(--line);
+    z-index: 0;
+  }
+  .step {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    padding: 18px;
+    position: relative;
+    z-index: 1;
+  }
+  .step-num {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: var(--ink);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 14px;
+    margin-bottom: 12px;
+  }
+  .step h4 {
+    margin: 0 0 4px;
+    font-size: 15px;
+  }
+  .step .step-when {
+    font-size: 11px;
+    color: var(--ink-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 8px;
+  }
+  .step p {
+    margin: 0;
+    font-size: 13px;
+    color: var(--ink-soft);
+    line-height: 1.45;
+  }
+
+  /* ===== Drempels ===== */
+  .drempels {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+  }
+  .drempel {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    padding: 20px;
+  }
+  .drempel .q {
+    font-weight: 600;
+    font-size: 15px;
+    margin: 0 0 10px;
+  }
+  .drempel .q::before {
+    content: "\201C";
+    margin-right: 2px;
+    color: var(--ink-muted);
+  }
+  .drempel .q::after {
+    content: "\201D";
+    margin-left: 2px;
+    color: var(--ink-muted);
+  }
+  .drempel .a {
+    font-size: 13px;
+    color: var(--ink-soft);
+    margin: 0 0 12px;
+  }
+  .drempel .who-answers {
+    font-size: 12px;
+    color: var(--ink-muted);
+    border-top: 1px solid var(--line-soft);
+    padding-top: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .who-avatar {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #cdd5e1, #b7c0cf);
+  }
+
+  /* ===== Profielen per locatie ===== */
+  .profiles {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+  }
+  .profile {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    padding: 18px;
+  }
+  .profile .city {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+  .profile .people {
+    font-size: 12px;
+    color: var(--ink-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 12px;
+  }
+  .profile p {
+    font-size: 13px;
+    color: var(--ink-soft);
+    margin: 0;
+  }
+
+  /* ===== Drivers ===== */
+  .drivers {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+  }
+  .driver {
+    padding: 18px;
+    border: 1px solid var(--line);
+    background: var(--surface);
+  }
+  .driver-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 4px;
+    background: var(--accent-soft);
+    margin-bottom: 10px;
+  }
+  .driver h4 {
+    margin: 0 0 4px;
+    font-size: 14px;
+  }
+  .driver p {
+    margin: 0;
+    font-size: 12px;
+    color: var(--ink-soft);
+  }
+
+  /* ===== Calculator banner ===== */
+  .calc-banner {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 24px;
+    align-items: center;
+    padding: 28px;
+    background: var(--ink);
+    color: #fff;
+    border-radius: 4px;
+  }
+  .calc-banner h3 {
+    margin: 0 0 6px;
+    font-size: 20px;
+  }
+  .calc-banner p {
+    margin: 0;
+    font-size: 14px;
+    color: #ccc;
+  }
+  .calc-banner .btn {
+    background: #fff;
+    color: var(--ink);
+    border-color: #fff;
+  }
+
+  /* ===== Achterban-pad ===== */
+  .secondary-path {
+    padding: 20px 24px;
+    border: 1px dashed var(--line);
+    background: transparent;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 20px;
+    align-items: center;
+  }
+  .secondary-path h4 {
+    margin: 0 0 4px;
+    font-size: 15px;
+  }
+  .secondary-path p {
+    margin: 0;
+    font-size: 13px;
+    color: var(--ink-soft);
+  }
+
+  /* ===== CTA bottom ===== */
+  .final-cta {
+    text-align: center;
+    padding: 48px 24px;
+    background: var(--accent-soft);
+    border-radius: 4px;
+  }
+  .final-cta h3 {
+    margin: 0 0 8px;
+    font-size: 22px;
+  }
+  .final-cta p {
+    margin: 0 0 20px;
+    color: var(--ink-soft);
+    font-size: 14px;
+  }
+
+  /* ===== Helper notes (zonewide) ===== */
+  .removed-note {
+    display: none;
+    margin: 12px 0 0;
+    padding: 8px 12px;
+    background: #ffe5e0;
+    color: var(--warn);
+    font-size: 12px;
+    border-left: 3px solid var(--warn);
+    border-radius: 0 3px 3px 0;
+  }
+  body.show-annot .removed-note { display: block; }
+
+  /* ===== Intro page ===== */
+  .intro-banner {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    padding: 24px 28px;
+    margin-bottom: 28px;
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--ink-soft);
+  }
+  .intro-banner strong { color: var(--ink); }
+
+  /* ===== Project fiche ===== */
+  .fiche-hero {
+    position: relative;
+    background: linear-gradient(135deg, #6b7e74 0%, #4a5b54 100%);
+    color: #fff;
+    padding: 48px 40px 40px;
+    border-radius: 4px;
+    overflow: hidden;
+    min-height: 340px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    margin-bottom: 4px;
+  }
+  .fiche-hero::after {
+    content: "Foto: binnentuin Brasserie Aerts";
+    position: absolute;
+    top: 16px;
+    right: 20px;
+    font-size: 11px;
+    color: rgba(255,255,255,0.7);
+    background: rgba(0,0,0,0.2);
+    padding: 4px 10px;
+    border-radius: 3px;
+  }
+  .fiche-hero .crumbs {
+    font-size: 13px;
+    color: rgba(255,255,255,0.8);
+    margin-bottom: 14px;
+  }
+  .fiche-hero .crumbs a { color: rgba(255,255,255,0.95); text-decoration: none; }
+  .fiche-hero h1 {
+    font-size: 42px;
+    margin: 0 0 10px;
+    letter-spacing: -0.02em;
+    font-weight: 600;
+    line-height: 1.05;
+  }
+  .fiche-hero .tagline {
+    font-size: 17px;
+    color: rgba(255,255,255,0.92);
+    margin: 0 0 22px;
+    max-width: 620px;
+  }
+  .fiche-hero .chips {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .chip {
+    background: rgba(255,255,255,0.92);
+    color: var(--ink);
+    padding: 6px 14px;
+    border-radius: 100px;
+    font-size: 13px;
+    font-weight: 500;
+  }
+  .chip.urgent { background: var(--ink); color: #fff; }
+  .chip.muted { background: rgba(255,255,255,0.15); color: #fff; border: 1px solid rgba(255,255,255,0.3); }
+
+  /* Availability bar onder hero */
+  .availability {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    padding: 16px 24px;
+    display: grid;
+    grid-template-columns: 1fr auto auto;
+    gap: 24px;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  .availability .progress {
+    height: 10px;
+    background: var(--line-soft);
+    border-radius: 5px;
+    overflow: hidden;
+    flex: 1;
+    min-width: 220px;
+  }
+  .availability .progress > div {
+    height: 100%;
+    background: var(--ink);
+  }
+  .availability .nums {
+    font-size: 14px;
+    color: var(--ink);
+  }
+  .availability .nums strong { font-weight: 600; }
+  .availability .nums span { color: var(--ink-muted); }
+  .availability-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  /* Rol sub-tabs */
+  .role-tabs {
+    display: flex;
+    gap: 0;
+    border-bottom: 1px solid var(--line);
+    margin: 28px 0 28px;
+  }
+  .role-tab-btn {
+    background: transparent;
+    border: none;
+    border-bottom: 3px solid transparent;
+    padding: 14px 22px;
+    font-size: 14px;
+    color: var(--ink-soft);
+    cursor: pointer;
+    font-family: inherit;
+    font-weight: 500;
+    margin-bottom: -1px;
+    letter-spacing: 0.01em;
+  }
+  .role-tab-btn:hover { color: var(--ink); }
+  .role-tab-btn.active {
+    color: var(--ink);
+    border-bottom-color: var(--ink);
+  }
+  .role-tab-btn .role-num {
+    background: var(--ink);
+    color: #fff;
+    border-radius: 100px;
+    padding: 2px 8px;
+    font-size: 11px;
+    margin-right: 8px;
+    font-weight: 600;
+  }
+  .role-tab-content {
+    display: none;
+  }
+  .role-tab-content.active {
+    display: block;
+  }
+
+  /* Project intro */
+  .fiche-intro-grid {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 32px;
+    align-items: start;
+  }
+  .fiche-intro h2 {
+    font-size: 24px;
+    margin: 0 0 12px;
+    letter-spacing: -0.01em;
+  }
+  .fiche-intro p {
+    font-size: 15px;
+    color: var(--ink-soft);
+    line-height: 1.6;
+  }
+  .meet-bewoners {
+    background: var(--accent-soft);
+    padding: 22px;
+    border-radius: 4px;
+  }
+  .meet-bewoners h4 {
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--ink-soft);
+    margin: 0 0 12px;
+  }
+  .meet-bewoners .spirit {
+    font-size: 15px;
+    color: var(--ink);
+    margin: 0 0 12px;
+    line-height: 1.5;
+  }
+  .meet-bewoners .meta {
+    font-size: 13px;
+    color: var(--ink-soft);
+    line-height: 1.6;
+  }
+  .meet-bewoners .meta strong { color: var(--ink); }
+
+  /* Woningtype cards */
+  .units {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+  }
+  .unit {
+    border: 1px solid var(--line);
+    padding: 20px;
+    background: var(--surface);
+  }
+  .unit h4 {
+    margin: 0 0 4px;
+    font-size: 17px;
+  }
+  .unit .available {
+    font-size: 11px;
+    color: var(--ink-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 14px;
+  }
+  .unit .available.taken {
+    color: var(--warn);
+  }
+  .unit .price-line {
+    font-size: 13px;
+    color: var(--ink-soft);
+    line-height: 1.5;
+    margin-bottom: 4px;
+  }
+  .unit .price-line strong {
+    color: var(--ink);
+    font-size: 17px;
+    font-weight: 600;
+  }
+  .unit .price-small {
+    font-size: 12px;
+    color: var(--ink-muted);
+    margin-top: 8px;
+    padding-top: 10px;
+    border-top: 1px solid var(--line-soft);
+  }
+
+  /* Locatie beleefbaar */
+  .location-vibe {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 28px;
+  }
+  .location-map {
+    aspect-ratio: 4/3;
+    background: linear-gradient(135deg, #e3e6ea, #cdd3da);
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--ink-soft);
+    font-size: 13px;
+    position: relative;
+  }
+  .location-map::before {
+    content: "📍";
+    position: absolute;
+    font-size: 24px;
+    color: var(--ink);
+  }
+  .vibe-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .vibe-list li {
+    padding: 14px 0;
+    border-bottom: 1px solid var(--line-soft);
+    display: grid;
+    grid-template-columns: 36px 1fr auto;
+    gap: 14px;
+    align-items: center;
+    font-size: 14px;
+  }
+  .vibe-list li:last-child { border-bottom: none; }
+  .vibe-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 6px;
+    background: var(--accent-soft);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+  }
+  .vibe-time {
+    font-size: 12px;
+    color: var(--ink-muted);
+    font-variant-numeric: tabular-nums;
+  }
+  .vibe-text strong { display: block; }
+  .vibe-text span { font-size: 12px; color: var(--ink-muted); }
+
+  /* Experience timeline (jouw reis door dit project) */
+  .exp-timeline {
+    border-left: 2px solid var(--line);
+    padding-left: 28px;
+    margin-left: 14px;
+  }
+  .exp-step {
+    position: relative;
+    padding: 0 0 28px;
+  }
+  .exp-step:last-child { padding-bottom: 4px; }
+  .exp-step::before {
+    content: "";
+    position: absolute;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--ink);
+    left: -36px;
+    top: 4px;
+    border: 3px solid #fff;
+    box-shadow: 0 0 0 1px var(--ink);
+  }
+  .exp-step .when {
+    font-size: 11px;
+    color: var(--ink-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 4px;
+    font-weight: 600;
+  }
+  .exp-step h4 {
+    margin: 0 0 6px;
+    font-size: 16px;
+  }
+  .exp-step p {
+    margin: 0;
+    font-size: 14px;
+    color: var(--ink-soft);
+    line-height: 1.55;
+  }
+
+  /* Compact bewoner-quote */
+  .quote-block {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    padding: 24px 28px;
+    border-left: 4px solid var(--ink);
+    margin: 0;
+  }
+  .quote-block .q-text {
+    font-size: 17px;
+    line-height: 1.5;
+    color: var(--ink);
+    margin: 0 0 12px;
+    font-weight: 500;
+  }
+  .quote-block .q-who {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 13px;
+    color: var(--ink-soft);
+  }
+  .quote-block .q-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #cdd5e1, #b7c0cf);
+  }
+
+  /* Investor block (compact) */
+  .invest-block {
+    background: #1e1e1e;
+    color: #fff;
+    padding: 32px;
+    border-radius: 4px;
+  }
+  .invest-block h3 {
+    margin: 0 0 8px;
+    font-size: 22px;
+  }
+  .invest-block .invest-lead {
+    color: #bbb;
+    margin: 0 0 24px;
+    font-size: 14px;
+    max-width: 560px;
+  }
+  .invest-options {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    margin-bottom: 24px;
+  }
+  .invest-option {
+    background: rgba(255,255,255,0.06);
+    padding: 18px;
+    border-radius: 4px;
+    border: 1px solid rgba(255,255,255,0.12);
+  }
+  .invest-option h5 {
+    margin: 0 0 4px;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #ddd;
+  }
+  .invest-option .return {
+    font-size: 22px;
+    font-weight: 600;
+    margin: 6px 0 4px;
+  }
+  .invest-option p {
+    margin: 0;
+    font-size: 12px;
+    color: #bbb;
+    line-height: 1.5;
+  }
+
+  /* Praktisch */
+  .praktisch {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+  }
+  .prak-item {
+    border: 1px solid var(--line);
+    padding: 18px;
+    background: var(--surface);
+  }
+  .prak-item .label {
+    font-size: 11px;
+    color: var(--ink-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 6px;
+  }
+  .prak-item .value {
+    font-size: 14px;
+    color: var(--ink);
+    font-weight: 500;
+  }
+
+  /* Removed-this notice (compact inline) */
+  .compact-removed {
+    display: none;
+    margin: 0 0 16px;
+    padding: 10px 14px;
+    background: #ffe5e0;
+    color: var(--warn);
+    font-size: 12px;
+    border-left: 3px solid var(--warn);
+    border-radius: 0 3px 3px 0;
+  }
+  body.show-annot .compact-removed { display: block; }
+
+  /* ===== Opener variants (homepage hero switcher) ===== */
+  .opener-select-wrap {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-left: 12px;
+    font-size: 12px;
+    color: #ddd;
+  }
+  .opener-select-wrap select {
+    background: rgba(255,255,255,0.08);
+    border: 1px solid #444;
+    color: #fff;
+    padding: 5px 8px;
+    border-radius: 3px;
+    font-size: 12px;
+    font-family: inherit;
+    cursor: pointer;
+    min-width: 200px;
+  }
+  .opener-select-wrap select option {
+    background: var(--ink);
+    color: #fff;
+  }
+  .opener-variant { display: none; }
+  .opener-variant.active { display: block; }
+
+  /* Variant A — tussen huren en kopen */
+  .opener-a {
+    display: grid;
+    grid-template-columns: 1fr 1.15fr;
+    gap: 40px;
+    align-items: center;
+  }
+  .opener-a h1 {
+    font-size: 38px;
+    margin: 0 0 16px;
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+    font-weight: 600;
+  }
+  .opener-a .lead {
+    font-size: 16px;
+    color: var(--ink-soft);
+    margin: 0 0 24px;
+    line-height: 1.6;
+  }
+  .compare-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 10px;
+  }
+  .compare-col {
+    background: var(--bg);
+    padding: 22px 16px;
+    border-radius: 4px;
+    border: 1px solid var(--line);
+    text-align: center;
+  }
+  .compare-col.highlight {
+    background: var(--wc-forest);
+    color: #fff;
+    border-color: var(--wc-forest);
+    transform: scale(1.04);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+  }
+  .compare-col h5 {
+    margin: 0 0 10px;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--ink-muted);
+    font-weight: 600;
+  }
+  .compare-col.highlight h5 { color: #bbb; }
+  .compare-col .compare-icon {
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+  .compare-col p {
+    margin: 0;
+    font-size: 12px;
+    line-height: 1.5;
+    color: var(--ink-soft);
+  }
+  .compare-col.highlight p { color: #e0e0e0; }
+
+  /* Variant B — frustratie (dark) */
+  .opener-b-section {
+    background: #1a1a1a;
+    color: #fff;
+    border: none;
+    padding: 56px 40px;
+  }
+  .opener-b-section .zone-tag { background: #fff; color: var(--ink); }
+  .opener-b {
+    max-width: 820px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  .opener-b h1 {
+    font-size: 44px;
+    margin: 0 0 20px;
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+    font-weight: 600;
+  }
+  .opener-b h1 .dim { color: #777; }
+  .opener-b .lead {
+    font-size: 17px;
+    color: #ccc;
+    margin: 0 auto 32px;
+    line-height: 1.55;
+    max-width: 640px;
+  }
+  .opener-b .cta-row {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+  }
+  .opener-b .btn {
+    background: #fff;
+    color: var(--ink);
+    border-color: #fff;
+  }
+  .opener-b .btn-soft {
+    background: transparent;
+    color: #fff;
+    border-color: #555;
+  }
+
+  /* Variant C — verbintenis met cijfers */
+  .opener-c {
+    display: grid;
+    grid-template-columns: 1.15fr 1fr;
+    gap: 48px;
+    align-items: center;
+  }
+  .opener-c h1 {
+    font-size: 36px;
+    margin: 0 0 16px;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+    font-weight: 600;
+  }
+  .opener-c .lead {
+    font-size: 15px;
+    color: var(--ink-soft);
+    margin: 0 0 24px;
+    line-height: 1.6;
+  }
+  .opener-c-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px 28px;
+  }
+  .stat-mini {
+    border-left: 2px solid var(--ink);
+    padding-left: 16px;
+  }
+  .stat-mini .stat-num {
+    font-size: 34px;
+    font-weight: 600;
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+  .stat-mini .stat-label {
+    font-size: 12px;
+    color: var(--ink-soft);
+  }
+
+  /* Generic cta-row */
+  .cta-row {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+</style>
+</head>
+<body>
+
+<!-- ===== Control bar ===== -->
+<div class="control-bar">
+  <div>
+    <div class="label">Wooncoop wireframe v2 — bewoner-flow</div>
+    <div class="sub">Gebaseerd op interviews met Ann (24 maart) en Lukas (maart 2026)</div>
+  </div>
+  <div class="tabs">
+    <button class="tab-btn active" data-tab="home">Homepage</button>
+    <button class="tab-btn" data-tab="bewoner">Bewoner-landing</button>
+    <button class="tab-btn" data-tab="fiche">Projectfiche</button>
+  </div>
+  <label class="toggle-wrap">
+    <input type="checkbox" id="annot-toggle"> Toon redenering
+  </label>
+  <label class="opener-select-wrap">
+    Homepage-opener:
+    <select id="opener-select">
+      <option value="a">A · Tussen huren en kopen</option>
+      <option value="b">B · Vanuit frustratie</option>
+      <option value="c">C · Vanuit verbintenis</option>
+    </select>
+  </label>
+</div>
+
+<!-- ===== PAGE 1: HOMEPAGE ===== -->
+<div class="page active" id="page-home">
+
+  <div class="intro-banner">
+    <strong>Homepage v2.</strong> De bedoeling is dat een bewoner-kandidaat binnen 5 seconden ziet dat dit een woonsite is, niet een crowdfunding-site — en dat een mens (Ann) hier het verschil maakt, niet een infosessie van 30 minuten. Schakel <em>"Toon redenering"</em> in om per element de interview-bron te zien.
+  </div>
+
+  <!-- Site header -->
+  <div class="site-header">
+    <div class="logo">__wooncoop__</div>
+    <nav class="site-nav">
+      <a href="#" class="active">Woon</a>
+      <a href="#">Investeer</a>
+      <a href="#">Investeer namens iemand</a>
+      <a href="#">Projecten</a>
+      <a href="#">Nieuws</a>
+    </nav>
+    <div class="header-right">
+      <span>📞 Praat met Ann</span>
+      <a href="#">Contact</a>
+    </div>
+    <div class="annot" style="margin: 14px 0 0; grid-column: 1 / -1; flex-basis: 100%;">
+      <strong>Geen "Investeer Nu"-knop meer in de header.</strong>
+      <span class="quote">Anton zelf in Ann's interview §6: <em>"'Investeer nu'-knop staat te prominent — niet logisch voor een wooncoöperatie (is geen t-shirt kopen)."</em> Vervangen door 'Praat met Ann' rechtsboven — concrete persoon, lage drempel.</span>
+    </div>
+  </div>
+
+  <!-- ===== Concept-opener (3 varianten, dropdown-driven) ===== -->
+
+  <!-- Variant A — Tussen huren en kopen -->
+  <div class="opener-variant active" data-opener="a">
+    <section class="zone">
+      <span class="zone-tag">Hero · Variant A</span>
+      <div class="opener-a">
+        <div>
+          <h1>Wonen aan kostprijs. Een stap tussen huren en kopen.</h1>
+          <p class="lead">Je huurt geen kale woning — een deel van wat je betaalt, bouwt op tot jouw aandeel in het gebouw. Geen lening voor 30 jaar, geen baksteen die je vastzet.</p>
+          <div class="cta-row">
+            <a href="#" class="btn">Hoe het werkt voor jou</a>
+            <a href="#" class="btn btn-soft">Bekijk projecten</a>
+          </div>
+        </div>
+        <div class="compare-grid">
+          <div class="compare-col">
+            <h5>Huren</h5>
+            <div class="compare-icon">🏠</div>
+            <p>Je betaalt elke maand. Aan het einde van de rit heb je niets opgebouwd.</p>
+          </div>
+          <div class="compare-col highlight">
+            <h5>Wooncoop</h5>
+            <div class="compare-icon">⚖️</div>
+            <p>Je betaalt elke maand. Een deel daarvan bouwt op tot jouw aandeel.</p>
+          </div>
+          <div class="compare-col">
+            <h5>Kopen</h5>
+            <div class="compare-icon">🔑</div>
+            <p>Je leent voor 30 jaar. Het pand is van jou — maar de schuld ook.</p>
+          </div>
+        </div>
+      </div>
+      <div class="annot">
+        <strong>Variant A: positioneer tussen twee bekende ankers.</strong>
+        <span class="quote">Patroon B vroeg letterlijk: <em>"vergelijkingen ('zoals X, maar Y') als verteerbare eerste begripslaag."</em> Hier zijn dat "huren" en "kopen" — twee dingen die iedereen begrijpt.</span>
+        <span class="quote">Patroon C: kiest bewust voor <em>"aan kostprijs"</em> + <em>"aandeel"</em> + <em>"geen lening"</em>. Dat is wat een lexicon-per-rol vraagt: één team-keuze, doorgetrokken in alle teksten.</span>
+        <span class="quote"><strong>Sterk in</strong>: helder, zelfverklarend, eerlijk. <strong>Risico</strong>: voelt iets zakelijk — bewoner-bewijs daaronder lost dat op.</span>
+      </div>
+    </section>
+  </div>
+
+  <!-- Variant B — Vanuit frustratie -->
+  <div class="opener-variant" data-opener="b">
+    <section class="zone opener-b-section">
+      <span class="zone-tag">Hero · Variant B</span>
+      <div class="opener-b">
+        <h1>Wat als wonen geen 30-jaar-schuld hoefde te zijn? <br><span class="dim">En je huur ook niet zomaar weg was?</span></h1>
+        <p class="lead">Wooncoop is wonen bij een coöperatie van 250+ mensen in Vlaanderen. Je huurt — maar wat je betaalt, bouwt op tot iets dat van jou is.</p>
+        <div class="cta-row">
+          <a href="#" class="btn">Hoe het werkt</a>
+          <a href="#" class="btn btn-soft">Bekijk projecten</a>
+        </div>
+      </div>
+    </section>
+    <div class="annot">
+      <strong>Variant B: begin bij een herkenbare frustratie.</strong>
+      <span class="quote">Speelt direct in op twee drempels die Ann §5 noemt: <em>"baksteen in de maag-mentaliteit"</em> en de financiële drempel — niet om die te bevestigen, maar om te tonen dat er een alternatief is.</span>
+      <span class="quote">Lukas §3: <em>"Eerst luchtig en commerciëler schetsen."</em> Een vraagvorm voelt gespreks-achtig, niet als brochure.</span>
+      <span class="quote"><strong>Sterk in</strong>: emotioneel, blijft hangen, onderscheidt zich van wat staat. <strong>Risico</strong>: kan anti-bank of anti-huur klinken — voor een coöperatie kan dat te activistisch overkomen. En Wooncoop is GEEN gratis wonen — verwachtingsmanagement.</span>
+    </div>
+  </div>
+
+  <!-- Variant C — Vanuit verbintenis -->
+  <div class="opener-variant" data-opener="c">
+    <section class="zone">
+      <span class="zone-tag">Hero · Variant C</span>
+      <div class="opener-c">
+        <div>
+          <h1>Samen wonen aan kostprijs. In een coöperatie waarvan jij mede-eigenaar bent.</h1>
+          <p class="lead">Wooncoop bouwt, beheert en verhuurt coöperatief in Vlaanderen sinds 2018. Geen winstoogmerk — wel een gemeenschap die samen ontwikkelt en mee beslist.</p>
+          <div class="cta-row">
+            <a href="#" class="btn">Hoe het werkt</a>
+            <a href="#" class="btn btn-soft">Bekijk projecten</a>
+          </div>
+        </div>
+        <div class="opener-c-stats">
+          <div class="stat-mini">
+            <div class="stat-num">62</div>
+            <div class="stat-label">Woningen bewoond</div>
+          </div>
+          <div class="stat-mini">
+            <div class="stat-num">5</div>
+            <div class="stat-label">Projecten in aanbouw</div>
+          </div>
+          <div class="stat-mini">
+            <div class="stat-num">250+</div>
+            <div class="stat-label">Coöperanten</div>
+          </div>
+          <div class="stat-mini">
+            <div class="stat-num">8 jaar</div>
+            <div class="stat-label">Actief in Vlaanderen</div>
+          </div>
+        </div>
+      </div>
+      <div class="annot">
+        <strong>Variant C: bewijs vóór belofte.</strong>
+        <span class="quote">Feitelijk, vertrouwenwekkend, geen taalkunsten. Gebruikt cijfers als bewijs vanaf het begin — sluit aan bij Lukas §10 (data-discipline opbouwen): zichtbaarheid van wat er staat is een data-keuze.</span>
+        <span class="quote">Sluit ook aan bij patroon A: minder uitleggen, meer tonen. Geen vergelijking nodig — als je 62 bewoonde woningen ziet, weet je dat het bestaat en werkt.</span>
+        <span class="quote"><strong>Sterk in</strong>: vertrouwen, professionaliteit, ontwapent skepsis. <strong>Risico</strong>: vlak. Geen "kapstok" voor wie het concept nog niet snapt — bezoeker moet zelf doorklikken om dat te leren. Mist patroon B's vergelijking.</span>
+      </div>
+    </section>
+  </div>
+
+  <!-- Bewoner-bewijs (was hero in v2) -->
+  <section class="zone">
+    <span class="zone-tag">Bewoner-bewijs</span>
+    <div class="hero">
+      <div class="hero-image">
+        <span class="badge">Foto: Marleen, Patershof Sint-Niklaas</span>
+      </div>
+      <div>
+        <p class="hero-quote">Ik woon hier nu drie jaar. Mijn maandlast is €640. Over 25 jaar daalt die naar €290.</p>
+        <p class="hero-attrib"><strong>Marleen, 62</strong> — Patershof, Sint-Niklaas</p>
+        <div class="hero-cta-row">
+          <a href="#" class="btn">Bekijk meer verhalen</a>
+          <a href="#" class="btn btn-soft">Plan een gesprek</a>
+        </div>
+      </div>
+    </div>
+    <div class="annot">
+      <strong>Bewoner-bewijs verschuift van hero naar tweede zone — direct na de concept-opener.</strong>
+      <span class="quote">In de eerste versie was dit de hero. Maar wie wooncoop voor het eerst hoort, mist het kader. Concrete cijfers ("€640 nu, €290 over 25 jaar") werken pas als je weet wat wooncoop is. Na de concept-opener wordt dit citaat het <em>bewijs dat het werkt</em>, niet de <em>introductie</em>.</span>
+      <span class="quote">Ann §5: <em>"Reels en interviews met bewoners — werkt veel beter."</em> Behouden, maar op de juiste positie in de leesvolgorde.</span>
+      <span class="quote">Ann §3: profielmix per project. Marleen (60+, Sint-Niklaas) hier als voorbeeld; in productie roteert dit per bezoek (jonge Gent-er, koppel uit Antwerpen, etc.).</span>
+    </div>
+  </section>
+
+  <!-- Drie ingangen -->
+  <section class="zone">
+    <span class="zone-tag">Drie ingangen</span>
+    <h2 class="section">Wat brengt je hier?</h2>
+    <p class="section-sub">Voor elke vraag een eigen pad — geen 30 minuten infosessie om te ontdekken of dit iets voor jou is.</p>
+    <div class="role-row" style="grid-template-columns: repeat(3, 1fr);">
+      <a class="role-card" href="#">
+        <span class="role-label">Bewoner</span>
+        <h3>Een woning vinden</h3>
+        <p>Voor wie wil wonen aan kostprijs, in een coöperatieve gemeenschap.</p>
+        <span class="arrow">→ Hoe het werkt voor jou</span>
+      </a>
+      <a class="role-card" href="#">
+        <span class="role-label">Investeerder</span>
+        <h3>Investeren in wooncoop</h3>
+        <p>Voor wie wil bijdragen aan eerlijk wonen, met of zonder rendement.</p>
+        <span class="arrow">→ Mogelijkheden + rendement</span>
+      </a>
+      <a class="role-card" href="#">
+        <span class="role-label">Achterban</span>
+        <h3>Investeren namens iemand</h3>
+        <p>Voor familie of vrienden die een bewoner over de drempel willen helpen.</p>
+        <span class="arrow">→ Hoe je iemand steunt</span>
+      </a>
+    </div>
+    <div class="annot">
+      <strong>Drie aparte paden, niet alles op één pagina.</strong>
+      <span class="quote">Lukas §3: <em>"Pagina's dienen te veel doelen tegelijk: toekomstige bewoners, achterban en algemene investeerders. Dit maakt het rommelig en verwarrend."</em></span>
+      <span class="quote">Lukas §11: <em>"Service blueprint maken voor beide journeys (bewoner + investeerder) als kapstok."</em> Op de homepage al de splitsing tonen, voor verdere content per rol.</span>
+    </div>
+  </section>
+
+  <!-- Projecten -->
+  <section class="zone">
+    <span class="zone-tag">Projecten</span>
+    <h2 class="section">Onze woonprojecten</h2>
+    <p class="section-sub">Beschikbaarheid, locatie en woningtypes — in één oogopslag.</p>
+    <div class="projects">
+      <div class="project-card">
+        <div class="project-img"></div>
+        <div class="project-body">
+          <h4>Belle Fleur</h4>
+          <div class="meta">
+            <span>Gent · 24 woningen</span>
+            <span class="status">· Bewoond</span>
+          </div>
+        </div>
+      </div>
+      <div class="project-card">
+        <div class="project-img"></div>
+        <div class="project-body">
+          <h4>De Haringrokerij</h4>
+          <div class="meta">
+            <span>Antwerpen · 27 woningen</span>
+            <span class="status">· Bewoond</span>
+          </div>
+        </div>
+      </div>
+      <div class="project-card">
+        <div class="project-img"></div>
+        <div class="project-body">
+          <h4>Patershof</h4>
+          <div class="meta">
+            <span>Sint-Niklaas · 20 woningen</span>
+            <span class="status">· Bewoond</span>
+          </div>
+        </div>
+      </div>
+      <div class="project-card">
+        <div class="project-img"></div>
+        <div class="project-body">
+          <h4>Moos°Herk</h4>
+          <div class="meta">
+            <span>Hasselt · in aanbouw</span>
+            <span class="status">· Plaatsen vrij</span>
+          </div>
+        </div>
+      </div>
+      <div class="project-card">
+        <div class="project-img"></div>
+        <div class="project-body">
+          <h4>Brasserie Aerts</h4>
+          <div class="meta">
+            <span>Leuven · 18 woningen</span>
+            <span class="status">· In ontwikkeling</span>
+          </div>
+        </div>
+      </div>
+      <div class="project-card">
+        <div class="project-img"></div>
+        <div class="project-body">
+          <h4>Cohousing Stek Future</h4>
+          <div class="meta">
+            <span>Genk · in ontwikkeling</span>
+            <span class="status">· Plaatsen vrij</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="annot">
+      <strong>Projecten-grid behouden, maar met expliciete bewoner-info per kaart.</strong>
+      <span class="quote">Lukas §3: <em>"Geen uniform template — verschillende projecten hebben verschillende formaten."</em> Op de homepage wordt dat opgelost door één vast veld-format: locatie · woningen · status. Op de projectpagina zelf wordt verder gesplitst per rol (bewoner-view vs. investeerder-view).</span>
+    </div>
+  </section>
+
+  <!-- Persoonlijk contact -->
+  <section class="zone">
+    <span class="zone-tag">Persoonlijk contact</span>
+    <div class="contact-card">
+      <div class="avatar"></div>
+      <div>
+        <h4>Ann, bewonerscoach</h4>
+        <div class="role">Begeleidt kandidaat-bewoners van eerste vraag tot contract</div>
+        <div class="details">
+          <span>Telefoon</span>+32 9 123 45 67 &nbsp;·&nbsp;
+          <span>E-mail</span>ann@wooncoop.be
+        </div>
+        <div class="available">Bereikbaar ma–vr 9–17 · meestal binnen 24u antwoord</div>
+      </div>
+      <a href="#" class="btn">Plan een gesprek</a>
+    </div>
+    <div class="annot">
+      <strong>Contactgegevens en beschikbaarheid centraal — niet alleen een formulier.</strong>
+      <span class="quote">Anton in Ann's interview §6: <em>"Contactgegevens en beschikbaarheid zouden centraler moeten staan."</em></span>
+      <span class="quote">Ann §5 over wat conversie maakt: <em>"Persoonlijk telefoongesprek — Ann belt proactief, ontkracht veronderstellingen."</em> Het persoonlijke aspect wordt zo het hart van de homepage, niet een verstopte 'contact'-link.</span>
+    </div>
+  </section>
+
+  <!-- Stats split -->
+  <section class="zone">
+    <span class="zone-tag">Cijfers</span>
+    <div class="stats-split">
+      <div class="stat-block">
+        <h5>Bewoners</h5>
+        <div class="stat-grid">
+          <div class="stat-item">
+            <div class="stat-num">62</div>
+            <div class="stat-label">Bewoonde woningen</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-num">35</div>
+            <div class="stat-label">Toekomstige bewoners</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-num">5</div>
+            <div class="stat-label">Lopende projecten</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-num">8 jaar</div>
+            <div class="stat-label">Actief in Vlaanderen</div>
+          </div>
+        </div>
+      </div>
+      <div class="stat-block">
+        <h5>Investeerders</h5>
+        <div class="stat-grid">
+          <div class="stat-item">
+            <div class="stat-num">214</div>
+            <div class="stat-label">Coöperanten</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-num">€4,2M</div>
+            <div class="stat-label">Burgerinvestering</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-num">€2M</div>
+            <div class="stat-label">Solidair (afstand rendement)</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-num">8</div>
+            <div class="stat-label">Leninggevers</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="annot">
+      <strong>Cijfers uitgesplitst per rol — niet door elkaar.</strong>
+      <span class="quote">Live op wooncoop.be staat nu: "2 bewoonde wooneenheden, 35 coöperanten, 3 toekomstige bewoners, 8 leninggevers, €780.860 burgerinvestering" — door elkaar. Voor een bewoner zegt dat "klein, net begonnen", voor een investeerder "er is al geld". Hetzelfde blok wint en verliest tegelijk.</span>
+      <span class="quote">Lukas §3: <em>"Pagina's dienen te veel doelen tegelijk."</em></span>
+    </div>
+  </section>
+
+  <!-- Concept-uitleg verplaatst -->
+  <section class="zone">
+    <span class="zone-tag">Eerst meer weten?</span>
+    <h2 class="section">Wat is wooncoop — in 2 minuten</h2>
+    <p class="section-sub">Een korte video over hoe een wooncoöperatie werkt, en waarom we het zo doen.</p>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px;">
+      <div style="aspect-ratio: 16/9; background: linear-gradient(135deg, #d8dde6 0%, #c5cdd9 100%); border-radius: 4px; display: flex; align-items: center; justify-content: center; color: var(--ink-soft); font-size: 13px;">▶ Wooncoop in 2 minuten</div>
+      <div>
+        <p style="margin: 0 0 12px; color: var(--ink-soft);">Liever lezen? Hier vind je:</p>
+        <ul style="margin: 0; padding-left: 20px; color: var(--ink); font-size: 14px; line-height: 1.8;">
+          <li>De drie principes: samen, eerlijk, duurzaam</li>
+          <li>Hoe het financieel werkt — kort uitgelegd</li>
+          <li>Veelgestelde vragen, gegroepeerd per fase</li>
+        </ul>
+        <a href="#" class="btn btn-ghost" style="margin-top: 16px;">Lees de volledige uitleg</a>
+      </div>
+    </div>
+    <div class="annot">
+      <strong>Concept-uitleg verplaatst naar tweede laag — niet bovenaan.</strong>
+      <span class="quote">Lukas §3: <em>"Je kunt niet alles in één keer boef de klets geven. Eerst luchtig en commerciëler schetsen, tot op het einde heel sec en eerlijk uitleggen."</em></span>
+      <span class="quote">Ann §6: <em>"Infosessies die te ingewikkeld zijn — Ann vindt ze zelf te complex."</em> Op live site staat de uitleg-video boven bewoner-bewijs. In deze v2 keert die volgorde om.</span>
+    </div>
+    <div class="removed-note">
+      <strong>Wat hier WEG is t.o.v. de huidige homepage:</strong> de twee YouTube-video's bovenaan, de lange tekst over "Wooncoop combineert voordelen van huren en kopen", "Word lid van onze wooncoöperatie", en het "Vraag video-infosessie aan"-formulier met 30 minuten content. Allemaal verplaatst naar de tweede laag of de bewoner-landing.
+    </div>
+  </section>
+
+</div>
+
+<!-- ===== PAGE 2: BEWONER-LANDING ===== -->
+<div class="page" id="page-bewoner">
+
+  <div class="intro-banner">
+    <strong>Bewoner-landing.</strong> Deze pagina krijg je als je op de homepage kiest voor "Een woning vinden". Hier zit alle bewoner-specifieke content samen — gefaseerd opgebouwd van luchtig naar concreet. De achterban- en investeerder-paden hebben elk hun eigen versie.
+  </div>
+
+  <!-- Site header -->
+  <div class="site-header">
+    <div class="logo">__wooncoop__</div>
+    <nav class="site-nav">
+      <a href="#" class="active">Woon</a>
+      <a href="#">Investeer</a>
+      <a href="#">Investeer namens iemand</a>
+      <a href="#">Projecten</a>
+      <a href="#">Nieuws</a>
+    </nav>
+    <div class="header-right">
+      <span>📞 Praat met Ann</span>
+      <a href="#">Contact</a>
+    </div>
+  </div>
+
+  <!-- Hero -->
+  <section class="zone landing-hero">
+    <span class="zone-tag">Hero</span>
+    <h1>Een woning bij wooncoop. Hoe werkt het voor jou?</h1>
+    <p class="lead">Wonen aan kostprijs, in een gebouw waar je mede-eigenaar wordt van wat je opbouwt. Geen huur die opgaat aan iemand anders, geen lening voor 30 jaar bij de bank.</p>
+    <div class="proof">
+      "We dachten dat we te oud waren. Of dat we het concept niet zouden begrijpen. Ann heeft op één telefoongesprek alles uitgelegd. Vier maanden later woonden we hier."
+      <span class="who">— Geert en Mieke, 64 en 67, Patershof</span>
+    </div>
+    <div class="annot">
+      <strong>Storytelling vanuit de bewoner-vraag, niet vanuit Wooncoop's verhaal.</strong>
+      <span class="quote">Ann §6: <em>"Storytelling: niet vertellen vanuit Wooncoop ('wij willen iets vertellen'), maar vanuit de nood van de klant."</em></span>
+      <span class="quote">Het citaat raakt expliciet twee drempels uit Ann §5: <em>"Ik ben te oud om bij te dragen"</em> en <em>"Ik begrijp het niet"</em>. Anticipatie ingebouwd in het bewijs.</span>
+    </div>
+  </section>
+
+  <!-- Journey timeline -->
+  <section class="zone">
+    <span class="zone-tag">De reis</span>
+    <h2 class="section">Van interesse tot intrekken — vier stappen</h2>
+    <p class="section-sub">Zo ziet je traject eruit. Geen verrassingen, je weet vooraf wat in elke stap gebeurt.</p>
+    <div class="journey">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-when">Stap 1 · 15 min</div>
+        <h4>Eerste contact</h4>
+        <p>Je vult kort wat info in, of je krijgt onze video-uitleg. Daarna belt Ann je terug om je vragen te beantwoorden.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-when">Stap 2 · 1 uur</div>
+        <h4>Financieel gesprek</h4>
+        <p>Samen met Ann bekijken we jouw situatie. Wat past, wat is haalbaar, welke woning in welk project. Met onze calculator zie je je maandlast meteen.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-when">Stap 3 · halve dag</div>
+        <h4>Kennismaking</h4>
+        <p>Je ontmoet de mensen waarmee je zou samenwonen — een wandeling, een werfbezoek, soms een etentje. Geen formeel gesprek, gewoon kennismaken.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-when">Stap 4 · 1 uur</div>
+        <h4>Tweede gesprek + contract</h4>
+        <p>Cijfers fine-tunen, alles op één rijtje, contract doornemen en tekenen. Hier krijg je het volledige juridische en financiële plaatje.</p>
+      </div>
+    </div>
+    <div class="annot">
+      <strong>De 4 fases van Ann's customer journey, expliciet gemaakt.</strong>
+      <span class="quote">Ann §4 beschrijft letterlijk deze vier fases: eerste contact → salesgesprek → kennismaking bewonersgroep → tweede financieel + contract. Maar nergens op de huidige site is dat overzicht zichtbaar.</span>
+      <span class="quote">Lukas §3: <em>"Eerst luchtig en commerciëler schetsen, tot op het einde heel sec en eerlijk uitleggen wat het contract betekent."</em> De vier-staps-fasering vertaalt dat principe naar het scherm: stap 1 luchtig, stap 4 contractueel.</span>
+    </div>
+  </section>
+
+  <!-- Drempels -->
+  <section class="zone">
+    <span class="zone-tag">Veelgestelde vragen</span>
+    <h2 class="section">Wat houdt mensen tegen — en wat klopt er niet van</h2>
+    <p class="section-sub">Zeven dingen die we elke week horen. Telkens beantwoord door iemand die het zelf meemaakte.</p>
+    <div class="drempels">
+      <div class="drempel">
+        <p class="q">Ik begrijp dit niet — het lijkt zo ingewikkeld</p>
+        <p class="a">Dat hoor je vaker. Het concept is op papier complex, omdat het bestaat tussen huren en kopen. In een gesprek van 30 minuten met Ann wordt het meestal helder. Of bekijk de 2-min video.</p>
+        <div class="who-answers"><div class="who-avatar"></div>Antwoord van Ann, bewonerscoach</div>
+      </div>
+      <div class="drempel">
+        <p class="q">Ik word geen eigenaar — dat voelt risicovol</p>
+        <p class="a">Je wordt mede-eigenaar van de coöperatie, niet van de muren. Je aandelen volgen je. Verhuizen, scheiden, kinderen erven — het kapitaal blijft van jou.</p>
+        <div class="who-answers"><div class="who-avatar"></div>Antwoord van Karim, Belle Fleur Gent</div>
+      </div>
+      <div class="drempel">
+        <p class="q">Wat als wooncoop overkop gaat?</p>
+        <p class="a">Goede vraag — wij vinden 'm zelf belangrijk. We delen onze financiële verslagen, statuten en algemene vergadering-notulen openlijk. Hier vind je ze.</p>
+        <div class="who-answers"><div class="who-avatar"></div>Antwoord van Lukas, financieel coördinator</div>
+      </div>
+      <div class="drempel">
+        <p class="q">Collectief wonen schrikt me af — werkgroepen, samen klussen…</p>
+        <p class="a">Dat verschilt per project. Bij Patershof is er weinig verplicht. Bij Belle Fleur is er meer samen-leven. Op de projectpagina lees je per locatie hoe het werkt.</p>
+        <div class="who-answers"><div class="who-avatar"></div>Antwoord van Marleen, Patershof</div>
+      </div>
+      <div class="drempel">
+        <p class="q">Ik ben te oud om bij te dragen — dit is voor jonge mensen</p>
+        <p class="a">De helft van onze bewoners in Sint-Niklaas is boven de 60. Vaak alleenstaanden die eenzaamheid willen tegengaan. Leeftijd is geen drempel — eigen middelen wel, maar daar zijn oplossingen voor.</p>
+        <div class="who-answers"><div class="who-avatar"></div>Antwoord van Geert, 67, Patershof</div>
+      </div>
+      <div class="drempel">
+        <p class="q">Ik heb niet genoeg eigen middelen om in te stappen</p>
+        <p class="a">Familie of vrienden kunnen voor jou investeren via onze 'achterban'-formule. Hun rendement is optioneel — soms staan ze het af. Zo daalt de drempel.</p>
+        <div class="who-answers"><div class="who-avatar"></div>Antwoord van Ann, bewonerscoach</div>
+      </div>
+      <div class="drempel">
+        <p class="q">Mijn kinderen / notaris / bankier waarschuwen me</p>
+        <p class="a">Dat gebeurt vaak — en is begrijpelijk. Wij zijn nieuw in het Belgische landschap. We praten graag mee met jouw raadgever. Ann kan ook samen met jou een gesprek bij de notaris doen.</p>
+        <div class="who-answers"><div class="who-avatar"></div>Antwoord van Ann, bewonerscoach</div>
+      </div>
+    </div>
+    <div class="annot">
+      <strong>Letterlijk Ann's lijst van 7 drempels — elk expliciet weerlegd, bij voorkeur door een bewoner.</strong>
+      <span class="quote">Ann §5 somt deze zeven drempels op in haar volgorde van frequentie. Live op de site staat hiervan nu niets gestructureerd — alleen lange algemene FAQ's.</span>
+      <span class="quote">Ann §5 over wat helpt: <em>"Reels en interviews met bewoners die het zelf vertellen — werkt veel beter."</em> Daarom: antwoord telkens door een echte naam, geen anonieme Wooncoop-stem.</span>
+      <span class="quote">Anton §6: <em>"FAQ's bestaan maar zijn te lang en moeten versimpeld en contextueel in de journey geplaatst worden."</em></span>
+    </div>
+  </section>
+
+  <!-- Profielen per locatie -->
+  <section class="zone">
+    <span class="zone-tag">Wie woont waar</span>
+    <h2 class="section">Per project, een ander leven</h2>
+    <p class="section-sub">Niet elke locatie trekt hetzelfde mens. Helpt je herkennen waar jij zou passen.</p>
+    <div class="profiles">
+      <div class="profile">
+        <div class="city">Gent</div>
+        <div class="people">30–40ers · bakfietsen</div>
+        <p>Bewuste keuze voor compact wonen, zonder auto. Bewust mixed: ook 70-plussers in de groep. Diversiteit in financiële draagkracht.</p>
+      </div>
+      <div class="profile">
+        <div class="city">Antwerpen</div>
+        <div class="people">30–40 + 60+</div>
+        <p>Een groep die 30 jaar samen leefde in een oude cohousing en collectief overstapte. Veel ervaring met samen-leven.</p>
+      </div>
+      <div class="profile">
+        <div class="city">Sint-Niklaas</div>
+        <div class="people">50–60+</div>
+        <p>Helft 60+. Veel alleenstaanden die eenzaamheid willen tegengaan. Lichtere samen-leven-component dan Gent.</p>
+      </div>
+      <div class="profile">
+        <div class="city">Leuven</div>
+        <div class="people">Jonger publiek</div>
+        <p>Bewuste keuze voor collectief wonen in dure stad. Minder pragmatisch, meer waarde-gedreven.</p>
+      </div>
+    </div>
+    <div class="annot">
+      <strong>Ann's eigen profielanalyse — letterlijk overgenomen.</strong>
+      <span class="quote">Ann §3 schetst per locatie het profiel: Gent jong + 70+, Antwerpen mixed uit Haaringrokerij, Sint-Niklaas overwegend 50–60+, Leuven jong. Helpt kandidaten zichzelf herkennen vóór ze een projectpagina openen.</span>
+    </div>
+  </section>
+
+  <!-- Drivers -->
+  <section class="zone">
+    <span class="zone-tag">Waarom mensen kiezen</span>
+    <h2 class="section">Vier redenen die we vaak terughoren</h2>
+    <div class="drivers">
+      <div class="driver">
+        <div class="driver-icon"></div>
+        <h4>Haalbaar wonen</h4>
+        <p>In dure steden waar huur of koop niet meer klopt.</p>
+      </div>
+      <div class="driver">
+        <div class="driver-icon"></div>
+        <h4>Minder alleen</h4>
+        <p>Vooral 60+, alleenstaanden. Maar ook jonge gezinnen.</p>
+      </div>
+      <div class="driver">
+        <div class="driver-icon"></div>
+        <h4>Bewust collectief</h4>
+        <p>Compact, ecologisch, met buren die je kent.</p>
+      </div>
+      <div class="driver">
+        <div class="driver-icon"></div>
+        <h4>Flexibel bij verandering</h4>
+        <p>Scheiding, verhuis, ander leven — je aandelen volgen mee.</p>
+      </div>
+    </div>
+    <div class="annot">
+      <strong>Ann's vier gemeenschappelijke drivers — letterlijk uit §3.</strong>
+      <span class="quote">Ann §3: <em>"Betaalbaar(der) wonen in dure steden / Tegengaan van eenzaamheid (vooral bij alleenstaanden en 60-plussers) / Bewust kiezen voor collectief, compact en ecologisch wonen / Flexibiliteit bij levensveranderingen (scheiding, verhuizen)."</em></span>
+      <span class="quote">Termkeuze: "haalbaar wonen" i.p.v. "betaalbaar" — Lukas §5 vertelde dat "betaalbaar" leads opleverde die dachten dat het gratis was. Slechte kwaliteit.</span>
+    </div>
+  </section>
+
+  <!-- Calculator banner -->
+  <section class="zone" style="padding: 0; border: none; background: transparent;">
+    <div class="calc-banner">
+      <div>
+        <h3>Bereken jouw situatie</h3>
+        <p>Vul je woningwens en je middelen in. Je ziet meteen wat je maandlast wordt — vandaag en over 25 jaar. Geen Excel, geen formulieren.</p>
+      </div>
+      <a href="#" class="btn">Naar de calculator</a>
+    </div>
+    <div class="annot">
+      <strong>Calculator-banner pas ná verhaal en drempels, niet bovenaan.</strong>
+      <span class="quote">Ann §9 feedback op het prototype: positief, maar <em>"in eerste instantie intern gebruiken, niet direct publiek op de website"</em>. Plek reserveren is voor wanneer hij rijp is. Belofte: "vandaag én over 25 jaar" — Ann vroeg jaartal-simulatie in de tool.</span>
+      <span class="quote">Lukas §3 over de Excel: <em>"angstaanjagend en anticommercieel"</em>. Banner-tekst toont expliciet wat anders is: "Geen Excel, geen formulieren".</span>
+    </div>
+  </section>
+
+  <!-- Achterban-pad apart -->
+  <section class="zone">
+    <span class="zone-tag">Andere ingang</span>
+    <div class="secondary-path">
+      <div>
+        <h4>Wil iemand voor jou investeren?</h4>
+        <p>Als je eigen middelen krap zijn, kunnen familie of vrienden via onze 'achterban'-formule mee instappen. Aparte uitleg, aparte vragen, eigen pad.</p>
+      </div>
+      <a href="#" class="btn btn-ghost">Naar het achterban-pad →</a>
+    </div>
+    <div class="annot">
+      <strong>Achterban-pad apart, niet vermengd op deze pagina.</strong>
+      <span class="quote">Ann §7 beschrijft de achterban-stroom als een eigen flow met eigen vragen, eigen rendement-keuze, eigen formulier. Op de huidige site staat dit niet helder gescheiden van algemene investeerders.</span>
+      <span class="quote">Ann §9 calculator-feedback: <em>"Achterban-optie pas tonen op het einde van gesprek, niet direct."</em> Dezelfde logica voor de site: niet alles meteen aanbieden — wel duidelijk vindbaar wanneer iemand het zoekt.</span>
+    </div>
+  </section>
+
+  <!-- Final CTA -->
+  <section class="zone" style="padding: 0; border: none; background: transparent;">
+    <div class="final-cta">
+      <h3>Eén gesprek met Ann zegt meer dan tien brochures</h3>
+      <p>Geen verkooppraat, geen verplichting. 30 minuten om je situatie te bekijken.</p>
+      <a href="#" class="btn">Plan een gesprek met Ann</a>
+    </div>
+    <div class="annot">
+      <strong>CTA = persoonlijk gesprek, niet contract of formulier.</strong>
+      <span class="quote">Ann §5 over wat conversie maakt: <em>"Persoonlijk telefoongesprek werkt het best."</em> En Lukas §2: <em>"Als mensen eenmaal 'ja' zeggen, tekenen ze bijna altijd."</em> De drempel zit dus niet bij het contract — die zit bij het opnemen van de telefoon.</span>
+    </div>
+  </section>
+
+</div>
+
+<!-- ===== PAGE 3: PROJECTFICHE (Brasserie Aerts) ===== -->
+<div class="page" id="page-fiche">
+
+  <div class="intro-banner">
+    <strong>Projectfiche Brasserie Aerts v2.</strong> Hetzelfde project, opnieuw opgebouwd vanuit de interviews. Geen accordion van <em>"Hoe kan ik hier wonen?"</em> en <em>"Hoe investeer ik?"</em> als gelijken — wel een bewuste keuze welk perspectief je leest. Schakel <em>"Toon redenering"</em> in om per element de interview-bron te zien.
+  </div>
+
+  <!-- Site header -->
+  <div class="site-header">
+    <div class="logo">__wooncoop__</div>
+    <nav class="site-nav">
+      <a href="#">Woon</a>
+      <a href="#">Investeer</a>
+      <a href="#">Investeer namens iemand</a>
+      <a href="#" class="active">Projecten</a>
+      <a href="#">Nieuws</a>
+    </nav>
+    <div class="header-right">
+      <span>📞 Praat met Ann</span>
+      <a href="#">Contact</a>
+    </div>
+  </div>
+
+  <!-- Hero -->
+  <section class="zone" style="padding: 0; border: none; background: transparent;">
+    <div class="fiche-hero">
+      <div class="crumbs"><a href="#">Projecten</a> &nbsp;·&nbsp; Brussel</div>
+      <h1>Brasserie Aerts</h1>
+      <p class="tagline">28 woningen rond een gemeenschappelijke tuin, in een herbestemde brouwerij aan de rand van Sint-Joost.</p>
+      <div class="chips">
+        <span class="chip">Sint-Joost-ten-Node, Brussel</span>
+        <span class="chip">28 woningen · studio tot 3 slpk</span>
+        <span class="chip urgent">12 plaatsen vrij</span>
+        <span class="chip muted">Verhuis: zomer 2028</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Availability bar -->
+  <section class="zone" style="padding: 0; border: none; background: transparent;">
+    <div class="availability">
+      <div class="availability-row">
+        <div class="progress"><div style="width: 57%;"></div></div>
+        <div class="nums"><strong>16 van 28</strong> <span>al gekozen</span></div>
+      </div>
+      <div class="nums"><strong>12</strong> <span>plaatsen vrij</span></div>
+      <a href="#" class="btn">Plan een gesprek</a>
+    </div>
+    <div class="annot">
+      <strong>Concrete urgentie zonder schreeuw.</strong>
+      <span class="quote">Op de huidige fiche staat alleen <em>"Bewoners gezocht · In ontwikkeling"</em>. Onduidelijk hoeveel plaatsen vrij zijn. Een progressie-balk maakt drempel én vooruitgang zichtbaar — sluit aan bij Lukas §10: <em>"Data over bewonersprofiel wordt nu pas opgebouwd"</em> — dit is een eerste plek om die data zichtbaar te maken.</span>
+    </div>
+  </section>
+
+  <!-- Rol-tabs -->
+  <section class="zone" style="padding-top: 28px;">
+    <span class="zone-tag">Drie perspectieven</span>
+    <h2 class="section">Wat brengt jou hier?</h2>
+    <p class="section-sub">Zelfde project, drie verschillende paden. Kies wat voor jou klopt.</p>
+    <div class="role-tabs">
+      <button class="role-tab-btn active" onclick="setRole('bewoner', this)"><span class="role-num">1</span>Ik wil hier wonen</button>
+      <button class="role-tab-btn" onclick="setRole('investeerder', this)"><span class="role-num">2</span>Ik wil hier investeren</button>
+      <button class="role-tab-btn" onclick="setRole('achterban', this)"><span class="role-num">3</span>Ik wil iemand steunen</button>
+    </div>
+    <div class="annot" style="margin: -8px 0 24px;">
+      <strong>Aparte tabs i.p.v. drie ingeklapte accordions naast elkaar.</strong>
+      <span class="quote">Op de huidige fiche staan <em>"Hoe kan ik hier wonen?"</em> en <em>"Hoe investeer ik voor dit project?"</em> als gelijkwaardige accordion-items. Dat is patroon "vier rollen op één pagina".</span>
+      <span class="quote">Lukas §3: <em>"Pagina's dienen te veel doelen tegelijk: toekomstige bewoners, achterban en algemene investeerders. Dit maakt het rommelig en verwarrend."</em> Met aparte tabs zie je per keer één rol, met passend taalgebruik.</span>
+    </div>
+
+    <!-- ===== BEWONER TAB ===== -->
+    <div class="role-tab-content active" id="role-bewoner">
+
+      <!-- Intro -->
+      <div class="fiche-intro-grid">
+        <div class="fiche-intro">
+          <h2>Wonen in een herbestemde brouwerij — met een tuin in het midden</h2>
+          <p>Brasserie Aerts is een oude bierbrouwerij die we omtoveren tot 28 woningen rond één grote, groene binnentuin. Geen typische appartementsblok, wel een kleine gemeenschap. Centraal genoeg om te voet of met de tram naar het werk te gaan, ruim genoeg om je eigen ding te doen.</p>
+          <p>Het ontwerp is van atelier Tom Vanhee. We bouwen vanaf juni 2026 en verhuizen in de zomer van 2028 — vroeg genoeg om mee te denken over je eigen woning.</p>
+        </div>
+        <div class="meet-bewoners">
+          <h4>Wie woont hier waarschijnlijk?</h4>
+          <p class="spirit">Brussel-stedelijk, gemengd. Verwachte mix: jonge professionals 30–40, koppels met kinderen, alleenstaanden 50+. Net als in Antwerpen-Haringrokerij: stedelijk leven met buren die je kent.</p>
+          <p class="meta"><strong>5</strong> kandidaten al getekend · <strong>11</strong> in actief gesprek · <strong>12</strong> woningen nog vrij</p>
+        </div>
+      </div>
+      <div class="annot">
+        <strong>Storytelling vóór technische specs.</strong>
+        <span class="quote">Op de huidige fiche staat: <em>"Dit project is een ontwerp van atelier Tom Vanhee, het zal bestaan uit 5 verschillende gebouwen, met in totaal 28 wooneenheden, een mix van studio's en 1 tot 3 slaapkamerappartementen. Dit alles tot 4 verdiepingen hoog, rond een grote, gemeenschappelijke tuin..."</em> — technische opsomming.</span>
+        <span class="quote">Ann §6: <em>"Storytelling: niet vertellen vanuit Wooncoop, maar vanuit de nood van de klant."</em> "Wonen in een herbestemde brouwerij" is een belevingsbelofte. De technische details (5 gebouwen, 4 verdiepingen, ondergrondse fietsenstalling) staan verderop bij "praktisch".</span>
+        <span class="quote">Lukas §6: <em>"Per project verschilt de coöperatieve spirit."</em> Daarom expliciet zeggen welk profiel hier waarschijnlijk past — helpt zelfselectie.</span>
+      </div>
+
+      <!-- Woningtypes -->
+      <h2 class="section" style="margin-top: 36px;">Beschikbare woningen — met indicatieve maandlast</h2>
+      <p class="section-sub">Berekend voor een bewoner die de minimale 30% inbrengt en de aandelen opbouwt over 25 jaar.</p>
+      <div class="units">
+        <div class="unit">
+          <h4>Studio</h4>
+          <div class="available">4 van 8 vrij</div>
+          <div class="price-line">vanaf <strong>€ 520</strong> /maand</div>
+          <div class="price-line">eigen inbreng vanaf € 64.500</div>
+          <div class="price-small">Na 25 jaar: maandlast daalt naar ± € 230</div>
+        </div>
+        <div class="unit">
+          <h4>1 slaapkamer</h4>
+          <div class="available">5 van 10 vrij</div>
+          <div class="price-line">vanaf <strong>€ 680</strong> /maand</div>
+          <div class="price-line">eigen inbreng vanaf € 82.500</div>
+          <div class="price-small">Na 25 jaar: maandlast daalt naar ± € 295</div>
+        </div>
+        <div class="unit">
+          <h4>2 slaapkamer</h4>
+          <div class="available taken">2 van 7 vrij</div>
+          <div class="price-line">vanaf <strong>€ 845</strong> /maand</div>
+          <div class="price-line">eigen inbreng vanaf € 99.000</div>
+          <div class="price-small">Na 25 jaar: maandlast daalt naar ± € 365</div>
+        </div>
+        <div class="unit">
+          <h4>3 slaapkamer</h4>
+          <div class="available taken">1 van 3 vrij</div>
+          <div class="price-line">vanaf <strong>€ 1.020</strong> /maand</div>
+          <div class="price-line">eigen inbreng vanaf € 124.500</div>
+          <div class="price-small">Na 25 jaar: maandlast daalt naar ± € 440</div>
+        </div>
+      </div>
+      <a href="#" class="btn btn-ghost" style="margin-top: 18px;">Bereken voor jouw situatie →</a>
+      <div class="annot">
+        <strong>Concrete maandlast per type, met de jaartal-simulatie ingebouwd.</strong>
+        <span class="quote">Op de huidige fiche staat <em>"mix van studio's en 1 tot 3 slaapkamerappartementen"</em> — geen prijs, geen drempel, geen maandlast. Een bezoeker weet niet of dit voor hem haalbaar is, en moet een infosessie volgen om dat te ontdekken.</span>
+        <span class="quote">Ann §9 over de calculator-prototype: <em>"Jaartal-simulatie toevoegen: 'ik woon er 10 jaar, hoeveel betaal ik dan?' — vooral relevant voor jaar 26 wanneer lening afbetaald is en maandlast drastisch daalt."</em> Die belofte ("daalt naar ± €230") staat hier direct op de fiche.</span>
+        <span class="quote">Ann §5 over de financiële drempel: <em>"Niet genoeg eigen middelen — achterban aanspreken is lastig."</em> Door eigen inbreng meteen te tonen, kan iemand zien of het achterban-pad nodig is — en dat pad staat als tab 3 hierboven.</span>
+      </div>
+
+      <!-- Locatie beleefbaar -->
+      <h2 class="section" style="margin-top: 36px;">Hier ga je wonen</h2>
+      <p class="section-sub">Niet de afstanden in meter — wel hoe je leven eruitziet.</p>
+      <div class="location-vibe">
+        <div class="location-map">Kaart van Sint-Joost-ten-Node</div>
+        <ul class="vibe-list">
+          <li>
+            <div class="vibe-icon">🚉</div>
+            <div class="vibe-text"><strong>Brussel-Centraal</strong><span>te voet</span></div>
+            <div class="vibe-time">15 min</div>
+          </li>
+          <li>
+            <div class="vibe-icon">🚇</div>
+            <div class="vibe-text"><strong>Metro Madou</strong><span>lijn 2, 6</span></div>
+            <div class="vibe-time">7 min</div>
+          </li>
+          <li>
+            <div class="vibe-icon">🥐</div>
+            <div class="vibe-text"><strong>Bakker, slager, kruidenier</strong><span>Chaussée de Louvain</span></div>
+            <div class="vibe-time">3 min</div>
+          </li>
+          <li>
+            <div class="vibe-icon">🌳</div>
+            <div class="vibe-text"><strong>Squares & parken</strong><span>Square Marie-Louise</span></div>
+            <div class="vibe-time">6 min</div>
+          </li>
+          <li>
+            <div class="vibe-icon">🏫</div>
+            <div class="vibe-text"><strong>Basisscholen NL en FR</strong><span>4 in de buurt</span></div>
+            <div class="vibe-time">10 min</div>
+          </li>
+          <li>
+            <div class="vibe-icon">🚲</div>
+            <div class="vibe-text"><strong>Fietssnelweg naar Leuven</strong><span>via kanaalroute</span></div>
+            <div class="vibe-time">5 min</div>
+          </li>
+        </ul>
+      </div>
+      <div class="annot">
+        <strong>Beleefbare locatie i.p.v. afstanden in meter.</strong>
+        <span class="quote">Op de huidige fiche staat: <em>"Toplocatie: Ongeveer 1,3 km van Brussel-Centraal, 1,4 km van Brussel-Noord, slechts 600 meter van metrostation Madou, en vlakbij veel bushaltes."</em> — meters zeggen niets over leven. Tijd in min + concrete dagelijkse plekken (bakker, school, park) wel.</span>
+        <span class="quote">Ann §6: <em>"Storytelling: vanuit de nood van de klant."</em> Voor een toekomstige bewoner is de vraag niet "hoeveel meter?" maar "wat doe ik 's ochtends?".</span>
+      </div>
+
+      <!-- Jouw reis door dit project -->
+      <h2 class="section" style="margin-top: 36px;">Jouw reis tot intrekken</h2>
+      <p class="section-sub">Vier momenten — waarvan twee nu nog open, en twee na de zomer van 2026.</p>
+      <div class="exp-timeline">
+        <div class="exp-step">
+          <div class="when">Nu — eerste contact</div>
+          <h4>Gesprek met Ann (30 min)</h4>
+          <p>Geen verkooppraat. We bekijken samen of dit project bij jou past — financieel, qua leeftijd, qua wens om in een groep te wonen.</p>
+        </div>
+        <div class="exp-step">
+          <div class="when">Mei–juli 2026 — vóór de bouw start</div>
+          <h4>Kennismaking met de groep + werfbezoek</h4>
+          <p>Je ontmoet de andere kandidaat-bewoners bij een wandeling op de werf. Zo weet je vooraf met wie je samenwoont.</p>
+        </div>
+        <div class="exp-step">
+          <div class="when">Tijdens de bouw — 2026/2027</div>
+          <h4>Inspraak op jouw woning</h4>
+          <p>Je kiest je vloer, keukenkleur en sanitaire afwerking. Geen volledige inspraak op het ontwerp — wel op wat in jouw woning komt.</p>
+        </div>
+        <div class="exp-step">
+          <div class="when">Zomer 2028</div>
+          <h4>Sleuteloverdracht + verhuis</h4>
+          <p>Tweede financieel gesprek en ondertekenen contract. Daarna: sleutels in handen, en je nieuwe buren staan al klaar.</p>
+        </div>
+      </div>
+      <div class="annot">
+        <strong>De 4 fases uit Ann's interview, hier toegepast op dit ene project met concrete tijdsaanduiding.</strong>
+        <span class="quote">Op de huidige fiche staat alleen <em>"jan 2026 Start aanbesteding · juni 2026 start bouw · juni 2028 verhuis"</em> — drie bullets vanuit Wooncoop's planning. Geen "wat doet de bewoner wanneer".</span>
+        <span class="quote">Ann §4 beschrijft de 4 fases: eerste contact → financieel → kennismaking → contract. Hier gekoppeld aan de échte tijdslijn van dit project — kandidaat ziet meteen wat er voor hem op welk moment gebeurt.</span>
+        <span class="quote">Lukas §9: <em>"Bewoners kiezen enkel nog tussen vloerafwerking, kleurkastjes keuken, etc."</em> Eerlijk benoemen wat wel/niet inspraak is, voorkomt latere ontgoocheling.</span>
+      </div>
+
+      <!-- Drempels specifiek voor dit project -->
+      <h2 class="section" style="margin-top: 36px;">Wat we vaak horen over dit project</h2>
+      <div class="drempels" style="grid-template-columns: 1fr 1fr;">
+        <div class="drempel">
+          <p class="q">Brussel — is dit wel veilig om in te investeren?</p>
+          <p class="a">Sint-Joost is in volle ontwikkeling. We werken samen met de stad en de buurt. Voor je instapt, krijg je inzicht in de wijk, de plannen en de risicoanalyse die we zelf maakten.</p>
+          <div class="who-answers"><div class="who-avatar"></div>Antwoord van Lukas, financieel coördinator</div>
+        </div>
+        <div class="drempel">
+          <p class="q">2028 — dat is nog vier jaar. Wat doe ik intussen?</p>
+          <p class="a">Je kan je nu al inschrijven met een initiële inbreng. We houden je op de hoogte van de werf, en als jouw plannen ondertussen veranderen, ben je niet vast — je kapitaal volgt je.</p>
+          <div class="who-answers"><div class="who-avatar"></div>Antwoord van Ann, bewonerscoach</div>
+        </div>
+        <div class="drempel">
+          <p class="q">Ik werk in Antwerpen — is Brussel niet te ver?</p>
+          <p class="a">15 minuten met de trein tot Brussel-Centraal, 32 minuten tot Antwerpen-Centraal. Drie van de huidige kandidaten pendelen naar Antwerpen of Gent.</p>
+          <div class="who-answers"><div class="who-avatar"></div>Antwoord van Karim, kandidaat-bewoner</div>
+        </div>
+        <div class="drempel">
+          <p class="q">Ik spreek geen Frans. Kan ik hier wonen?</p>
+          <p class="a">De helft van onze huidige kandidaten is Nederlandstalig. Wooncoop werkt tweetalig. In de wijk vind je beide. Geen taalvoorwaarde voor bewoning.</p>
+          <div class="who-answers"><div class="who-avatar"></div>Antwoord van Ann, bewonerscoach</div>
+        </div>
+      </div>
+      <div class="annot">
+        <strong>Project-specifieke drempels, niet de algemene FAQ.</strong>
+        <span class="quote">Anton §6: <em>"FAQ's bestaan maar zijn te lang en moeten versimpeld en contextueel in de journey geplaatst worden."</em> Algemene drempels (te oud, baksteen-in-de-maag) horen op de bewoner-landing. Hier op de fiche: de drempels die specifiek voor dít project gelden.</span>
+        <span class="quote">Ann §5: drempels worden best beantwoord door bewoners zelf — niet door anonieme Wooncoop-stem. Daarom telkens een naam erbij.</span>
+      </div>
+
+      <!-- Bewoner-citaat -->
+      <div class="quote-block" style="margin-top: 32px;">
+        <p class="q-text">"Toen we voor het eerst op de werf stonden, dacht ik: dit gaat lang duren. Maar we hadden al direct het gevoel deel van een groep te zijn. Twee jaar later wonen we er — en de groep is er nog steeds."</p>
+        <div class="q-who">
+          <div class="q-avatar"></div>
+          <div><strong>Karim & Sofie</strong> · woont sinds 2024 in De Haringrokerij, Antwerpen</div>
+        </div>
+      </div>
+      <div class="annot">
+        <strong>Bewoner-bewijs uit een vergelijkbaar project, niet generieke wooncoop-marketing.</strong>
+        <span class="quote">Ann §5: <em>"Reels en interviews met bewoners die het zelf vertellen — werkt veel beter."</em> Voor een project in aanbouw kan je nog geen bewoners van dít project laten getuigen — wel iemand uit een gelijkaardig stedelijk project (Haringrokerij), die de "wachten op de bouw" wegneemt.</span>
+      </div>
+
+      <!-- Final CTA -->
+      <div class="final-cta" style="margin-top: 36px;">
+        <h3>Klopt dit voor jou? Plan een gesprek met Ann.</h3>
+        <p>30 minuten. Geen verplichting. Geen infosessie van een uur eerst — dat doen we als je het wil, daarna.</p>
+        <a href="#" class="btn">Plan een gesprek</a>
+      </div>
+      <div class="annot">
+        <strong>Geen 30-minuten infosessie als verplichte voorstap.</strong>
+        <span class="quote">Op de huidige fiche staat: <em>"Wens je hier te wonen, maak in detail kennis met het concept van coöperatief wonen via wooncoop. Bekijk de opname van de infosessie 'wonen bij wooncoop', of volg een live infosessie. Daarna kan je een gesprek met de bewonerscoach aanvragen."</em> Dat is twee drempels (concept-uitleg + infosessie) vóór de mens.</span>
+        <span class="quote">Ann §5: <em>"Persoonlijk telefoongesprek werkt veel beter."</em> Gesprek meteen als eerste stap, infosessie als optioneel later.</span>
+      </div>
+    </div>
+
+    <!-- ===== INVESTEERDER TAB ===== -->
+    <div class="role-tab-content" id="role-investeerder">
+      <div class="invest-block">
+        <h3>Investeren in Brasserie Aerts</h3>
+        <p class="invest-lead">We hebben nog € 1,2 miljoen kapitaal nodig om dit project te financieren zonder volledig op bankleningen te leunen. Hieronder de drie manieren waarop je kunt bijdragen.</p>
+        <div class="invest-options">
+          <div class="invest-option">
+            <h5>Regulier</h5>
+            <div class="return">2,5%</div>
+            <p>Dividend, met fiscaal voordeel voor coöperaties (tot € 800/jaar belastingvrij).</p>
+          </div>
+          <div class="invest-option">
+            <h5>Impact</h5>
+            <div class="return">1,5%</div>
+            <p>Iets lager rendement, met expliciete focus op impact-meting in jaarverslagen.</p>
+          </div>
+          <div class="invest-option">
+            <h5>Solidair</h5>
+            <div class="return">0%</div>
+            <p>Je staat 5 jaar je rendement af. Dat geld verlaagt de huur voor een bewoner via een sociale organisatie.</p>
+          </div>
+        </div>
+        <a href="#" class="btn" style="background: #fff; color: var(--ink); border-color: #fff;">Naar investeer-flow →</a>
+      </div>
+      <div class="annot">
+        <strong>Investeerder-pad apart, compact, met heldere keuze tussen drie types.</strong>
+        <span class="quote">Lukas §7 over de huidige investeerdersflow: <em>"4+ klikken naar Drupal aandeelhoudersregister, inconsistente stijl, andere terminologie ('impact investeerder' wordt 'investeerder', er komt 'solidariteitsinvesteerder' bij)."</em> Op deze fiche al de keuze duidelijk maken, één set termen, één call-to-action.</span>
+        <span class="quote">Ann §7: <em>"Solidaire Units — investeerders laten min 5 jaar hun rendement vallen, huur kan omlaag."</em> Solidair-optie expliciet gemaakt — hoort niet pas op een aparte campagne-pagina.</span>
+        <span class="quote">Lukas §11: deadline juni-campagne 2026. Deze opbouw helpt direct: kapitaal-doel, drie opties, één doorklik.</span>
+      </div>
+    </div>
+
+    <!-- ===== ACHTERBAN TAB ===== -->
+    <div class="role-tab-content" id="role-achterban">
+      <div class="fiche-intro-grid">
+        <div class="fiche-intro">
+          <h2>Iemand voor wie je wil bouwen</h2>
+          <p>Soms ken je iemand die graag in Brasserie Aerts zou wonen, maar het op eigen kracht niet rondkrijgt. Met onze achterban-formule investeer je geoormerkt — je kapitaal helpt specifiek die persoon over de drempel. Het rendement is van jou, of je staat het af.</p>
+          <p>Praktisch: je investeert in wooncoop, met de afspraak dat jouw kapitaal aan een specifieke bewoner gekoppeld blijft. Bij verhuis of overlijden krijg je je inbreng terug.</p>
+        </div>
+        <div class="meet-bewoners">
+          <h4>Hoe werkt het concreet?</h4>
+          <p class="spirit">Je beslist samen met de bewoner over het bedrag (minimum € 5.000). Je ondertekent een geoormerkt contract. De maandlast van de bewoner daalt direct.</p>
+          <p class="meta"><strong>Looptijd</strong>: open (zolang de bewoner woont)<br><strong>Rendement</strong>: 2,5% of afgestaan<br><strong>Risico</strong>: zelfde als reguliere coöperant</p>
+        </div>
+      </div>
+      <a href="#" class="btn" style="margin-top: 24px;">Naar het achterban-pad →</a>
+      <div class="annot">
+        <strong>Achterban als eigen pad, niet als variant van investeerder of bewoner.</strong>
+        <span class="quote">Ann §7: <em>"Gewone achterban — familie, vrienden die investeren in wooncoop, 'geoormerkt' aan een specifieke bewoner. Helpt bewoners die onvoldoende eigen middelen hebben om de instapdrempel te halen. Rendement is optioneel (kan afgestaan worden)."</em></span>
+        <span class="quote">Ann §5: financiële drempel is een grote afhaakreden. Achterban-pad maakt zichtbaar voor wie het niet alleen lukt: <em>"deze formule is er voor jou (of voor iemand die jou wil helpen)."</em></span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Praktisch (over alle tabs heen) -->
+  <section class="zone">
+    <span class="zone-tag">Praktisch</span>
+    <h2 class="section">De technische details</h2>
+    <p class="section-sub">Voor wie graag eerst de feiten checkt voor het verhaal.</p>
+    <div class="praktisch">
+      <div class="prak-item">
+        <div class="label">Architect</div>
+        <div class="value">atelier Tom Vanhee</div>
+      </div>
+      <div class="prak-item">
+        <div class="label">Aantal gebouwen</div>
+        <div class="value">5, max. 4 verdiepingen</div>
+      </div>
+      <div class="prak-item">
+        <div class="label">Vergunning</div>
+        <div class="value">Verleend dec. 2025</div>
+      </div>
+      <div class="prak-item">
+        <div class="label">Aanbesteding</div>
+        <div class="value">Lopend (Q1–Q2 2026)</div>
+      </div>
+      <div class="prak-item">
+        <div class="label">Ondergronds</div>
+        <div class="value">Fietsen, parkeer, wasplaats</div>
+      </div>
+      <div class="prak-item">
+        <div class="label">EPC-doel</div>
+        <div class="value">A · BEN-norm</div>
+      </div>
+      <div class="prak-item">
+        <div class="label">Gemeenschap</div>
+        <div class="value">Tuin + 2 ruimtes</div>
+      </div>
+      <div class="prak-item">
+        <div class="label">Bewonersgroep</div>
+        <div class="value">16/28 actief</div>
+      </div>
+    </div>
+    <div class="annot">
+      <strong>Technische info onderaan, in compact raster — niet als proza bovenaan.</strong>
+      <span class="quote">Op de huidige fiche staat de technische beschrijving (5 gebouwen, 28 wooneenheden, fietsenstallingen, parkeerplaatsen, berging, wasplaats) als eerste tekstblok in een lange paragraaf. In v2: belevingsverhaal eerst, feiten compact onderaan voor wie ze zoekt.</span>
+      <span class="quote">Lukas §3: <em>"Geen uniform template — verschillende projecten hebben verschillende formaten."</em> Deze 8-veld raster wordt voor élk project hetzelfde — uniformeert vanzelf.</span>
+    </div>
+  </section>
+
+</div>
+
+<script>
+  // Tab switching
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+      document.getElementById('page-' + btn.dataset.tab).classList.add('active');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  });
+
+  // Annotation toggle
+  document.getElementById('annot-toggle').addEventListener('change', (e) => {
+    document.body.classList.toggle('show-annot', e.target.checked);
+  });
+
+  // Role sub-tabs binnen project-fiche
+  function setRole(role, btn) {
+    btn.parentElement.querySelectorAll('.role-tab-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('.role-tab-content').forEach(c => c.classList.remove('active'));
+    document.getElementById('role-' + role).classList.add('active');
+  }
+
+  // Opener variant switcher (homepage hero)
+  document.getElementById('opener-select').addEventListener('change', (e) => {
+    document.querySelectorAll('.opener-variant').forEach(v => v.classList.remove('active'));
+    document.querySelector('.opener-variant[data-opener="' + e.target.value + '"]').classList.add('active');
+  });
+</script>
+
+</body>
+</html>
