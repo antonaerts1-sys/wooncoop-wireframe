@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>wooncoop — de ideale bewonersreis (to-be)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Karma:wght@400;700&family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --rood: #DA291C;
+    --mint: #D6E3DE;
+    --mint-licht: #EAF1EE;
+    --sage: #9AB9AD;
+    --bos: #375046;
+    --tekst: #333333;
+    --grijs: #777777;
+    --lijn: #E3E3DD;
+    --creme: #F7F6F2;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: "Karma", serif;
+    color: var(--tekst);
+    background: #fff;
+    line-height: 1.55;
+  }
+  h1, h2, h3, h4, .m { font-family: "Montserrat", sans-serif; font-weight: 700; line-height: 1.3; }
+
+  .demo-banner {
+    background: var(--bos);
+    color: #fff;
+    text-align: center;
+    font-family: "Montserrat", sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    padding: 8px 16px;
+  }
+
+  header.site {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 48px;
+    border-bottom: 1px solid var(--lijn);
+  }
+  header.site img { height: 52px; }
+  header.site .tag {
+    font-family: "Montserrat", sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--grijs);
+  }
+  header.site .tag span { color: var(--rood); }
+
+  .hero { background: var(--mint); padding: 54px 48px 46px; }
+  .hero .inner { max-width: 1100px; margin: 0 auto; }
+  .hero h1 { font-size: 38px; color: var(--bos); margin-bottom: 12px; }
+  .hero h1 em { font-style: normal; color: var(--rood); }
+  .hero p.lead { font-size: 19px; max-width: 700px; }
+  .hero .meta {
+    margin-top: 18px;
+    font-family: "Montserrat", sans-serif;
+    font-size: 13px;
+    color: var(--bos);
+  }
+
+  .wrap { max-width: 1100px; margin: 0 auto; padding: 0 48px; }
+
+  .journey { padding: 44px 0 8px; }
+  .journey h2 { font-size: 22px; color: var(--bos); margin-bottom: 6px; }
+  .journey .sub { color: var(--grijs); margin-bottom: 26px; max-width: 720px; }
+
+  .curve-legend {
+    display: flex; gap: 24px;
+    font-family: "Montserrat", sans-serif; font-size: 12px; font-weight: 600;
+    color: var(--grijs); margin-bottom: 8px;
+  }
+  .curve-legend .dot { display: inline-block; width: 22px; height: 4px; border-radius: 2px; margin-right: 7px; vertical-align: middle; }
+  .dot.tobe { background: var(--bos); }
+  .dot.asis { background: #C9C9C2; }
+
+  .curve-box svg { width: 100%; height: 140px; display: block; }
+
+  .fases {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    gap: 8px;
+    margin-bottom: 36px;
+  }
+  .fase {
+    background: var(--creme);
+    border: 2px solid transparent;
+    border-radius: 10px;
+    padding: 12px 10px 10px;
+    cursor: pointer;
+    text-align: left;
+    transition: all .15s ease;
+    font-family: "Montserrat", sans-serif;
+  }
+  .fase:hover { border-color: var(--sage); }
+  .fase.actief { background: var(--bos); border-color: var(--bos); color: #fff; }
+  .fase .nr {
+    font-size: 10px; font-weight: 700; letter-spacing: .08em;
+    color: var(--rood); display: block; margin-bottom: 3px;
+  }
+  .fase.actief .nr { color: var(--mint); }
+  .fase .naam { font-size: 12.5px; font-weight: 700; display: block; }
+
+  .detail {
+    border: 1px solid var(--lijn);
+    border-radius: 14px;
+    overflow: hidden;
+    margin-bottom: 30px;
+  }
+  .detail-kop {
+    background: var(--bos);
+    color: #fff;
+    padding: 26px 36px;
+    display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; flex-wrap: wrap;
+  }
+  .detail-kop .nr { font-family: "Montserrat", sans-serif; font-size: 11px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--mint); }
+  .detail-kop h3 { font-size: 26px; margin: 3px 0 5px; }
+  .detail-kop .vraag { font-size: 16.5px; font-style: italic; opacity: .95; max-width: 560px; }
+  .emotie-shift {
+    font-family: "Montserrat", sans-serif; font-size: 12.5px; font-weight: 600;
+    background: rgba(255,255,255,.12); border-radius: 999px; padding: 8px 16px;
+    white-space: nowrap;
+  }
+  .emotie-shift .naar { color: var(--mint); }
+  .emotie-shift .pijl { color: var(--rood); padding: 0 4px; }
+
+  .detail-body { display: grid; grid-template-columns: 1.15fr .85fr; }
+  .kolom { padding: 28px 36px; }
+  .kolom + .kolom { border-left: 1px solid var(--lijn); background: var(--creme); }
+
+  .kolom h4 {
+    font-size: 12px; letter-spacing: .1em; text-transform: uppercase;
+    color: var(--rood); margin-bottom: 14px;
+  }
+  .kolom ul { list-style: none; }
+  .kolom ul li { padding-left: 26px; position: relative; margin-bottom: 12px; font-size: 15.5px; }
+  .kolom ul li::before {
+    content: ""; position: absolute; left: 0; top: 7px;
+    width: 12px; height: 12px; border-radius: 50%;
+    background: var(--sage);
+  }
+
+  .verandering { margin-bottom: 13px; font-size: 14.5px; }
+  .verandering .van {
+    color: var(--grijs); display: block;
+    text-decoration: line-through; text-decoration-color: rgba(218,41,28,.5); text-decoration-thickness: 1.5px;
+  }
+  .verandering .naar { display: block; font-weight: 700; font-family: "Montserrat", sans-serif; font-size: 13.5px; margin-top: 2px; color: var(--bos); }
+  .verandering .naar::before { content: "→ "; color: var(--rood); }
+
+  .quote {
+    margin-top: 24px;
+    background: #fff;
+    border-left: 4px solid var(--rood);
+    border-radius: 0 10px 10px 0;
+    padding: 16px 20px;
+    font-size: 15.5px;
+    font-style: italic;
+  }
+  .quote .wie {
+    display: block; margin-top: 9px; font-style: normal;
+    font-family: "Montserrat", sans-serif; font-size: 11.5px; font-weight: 600; color: var(--grijs);
+  }
+  .quote .wie b { color: var(--bos); }
+
+  .bron {
+    margin-bottom: 56px;
+    font-family: "Montserrat", sans-serif;
+    font-size: 12px; color: var(--grijs);
+  }
+
+  footer.site {
+    background: var(--mint);
+    padding: 26px 48px;
+    font-size: 14px;
+    color: var(--bos);
+    display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap;
+  }
+  footer.site .m { font-size: 13px; }
+
+  @media (max-width: 900px) {
+    header.site, .hero, footer.site { padding-left: 20px; padding-right: 20px; }
+    .wrap { padding: 0 20px; }
+    .hero h1 { font-size: 29px; }
+    .fases { grid-template-columns: repeat(4, 1fr); }
+    .detail-body { grid-template-columns: 1fr; }
+    .kolom + .kolom { border-left: none; border-top: 1px solid var(--lijn); }
+  }
+</style>
+</head>
+<body>
+
+<div class="demo-banner">Concept ter illustratie — gebouwd op de workshop van 12 mei, nog te valideren met de bewonersinterviews</div>
+
+<header class="site">
+  <img src="logo-wooncoop.png" alt="wooncoop logo">
+  <div class="tag">bewonersreis <span>to-be</span> &nbsp;·&nbsp; wooncoop x The Kind Kids</div>
+</header>
+
+<section class="hero">
+  <div class="inner">
+    <h1>De ideale reis van<br>een <em>toekomstige bewoner</em></h1>
+    <p class="lead">Van eerste kennismaking tot trotse bewoner-coöperant: hoe elke stap van de reis eruit kan zien wanneer ze vertrekt vanuit wat bewoners echt nodig hebben.</p>
+    <p class="meta">Acht fases uit de as-is workshop · pijnpunten en kansen zoals we ze samen in kaart brachten</p>
+  </div>
+</section>
+
+<div class="wrap">
+  <section class="journey">
+    <h2>De reis in acht fases</h2>
+    <p class="sub">Klik op een fase om de ideale ervaring te bekijken. De curve toont hoe de bewoner zich onderweg voelt: vandaag (grijs, met de dip bij het financiële gesprek) en in de ideale reis (groen).</p>
+
+    <div class="curve-legend">
+      <span><span class="dot tobe"></span>to-be ervaring</span>
+      <span><span class="dot asis"></span>as-is vandaag</span>
+    </div>
+    <div class="curve-box">
+      <svg viewBox="0 0 1100 140" preserveAspectRatio="none">
+        <line x1="0" y1="70" x2="1100" y2="70" stroke="#E3E3DD" stroke-width="1" stroke-dasharray="4 5"/>
+        <path id="asis" d="M 65 48 C 110 60, 150 82, 200 86 C 250 90, 290 62, 335 60 C 380 58, 420 84, 470 88 C 520 92, 560 62, 605 58 C 650 54, 690 100, 740 108 C 790 116, 830 66, 875 58 C 920 50, 970 42, 1035 36"
+              fill="none" stroke="#C9C9C2" stroke-width="3" stroke-linecap="round"/>
+        <path id="tobe" d="M 65 42 C 110 40, 150 46, 200 44 C 250 42, 290 34, 335 34 C 380 34, 420 40, 470 40 C 520 40, 560 32, 605 32 C 650 32, 690 46, 740 44 C 790 42, 830 28, 875 24 C 920 20, 970 16, 1035 12"
+              fill="none" stroke="#375046" stroke-width="4" stroke-linecap="round"/>
+        <circle cx="740" cy="108" r="5" fill="#C9C9C2"/>
+        <circle cx="740" cy="44" r="6" fill="#375046"/>
+      </svg>
+    </div>
+
+    <div class="fases" id="fases"></div>
+
+    <article class="detail" id="detail"></article>
+
+    <p class="bron">Bron pijnpunten en kansen: as-is journey workshop wooncoop x The Kind Kids, 12 mei 2026. Quotes zijn fictieve voorbeelden ter illustratie; de echte stemmen komen uit de acht bewonersinterviews.</p>
+  </section>
+</div>
+
+<footer class="site">
+  <div>
+    <div class="m">wooncoop x The Kind Kids — customer journey sprint</div>
+    Interactief naslagwerk · concept juli 2026
+  </div>
+  <div>huren bij jezelf</div>
+</footer>
+
+<script>
+const FASES = [
+  {
+    nr: "Fase 1",
+    naam: "Awareness",
+    vraag: "“Klinkt interessant.” De bewoner hoort over wooncoop via media, mond-tot-mond of een event.",
+    vandaag: "Nieuwsgierig", straks: "Geprikkeld",
+    ideaal: [
+      "Bewoners zijn het gezicht: echte verhalen van mensen die de stap zetten, herkenbaar per levensfase, doen het eerste werk.",
+      "Gericht verder dan de cohousing-bubbel: campagnes die specifieke doelgroepen aanspreken in plaats van alleen de usual suspects.",
+      "Elke nieuwe kennismaking wordt geregistreerd: wooncoop weet voortaan waar mensen vandaan komen en wat werkt."
+    ],
+    verandert: [
+      { van: "Beperkt bereik: vooral de usual suspects uit de cohousing-bubbel.", naar: "Storytelling van bewoners opent nieuwe doelgroepen." },
+      { van: "Geen zicht op waar leads vandaan komen.", naar: "Elke bron wordt geregistreerd, keuzes op basis van data." }
+    ],
+    quote: "Ik zag een filmpje van een gezin dat er al woonde. Dat bleef hangen, veel meer dan eender welke uitleg.",
+    wie: "Toekomstige bewoner"
+  },
+  {
+    nr: "Fase 2",
+    naam: "Eerste interesse",
+    vraag: "“Hoe werkt dit precies?” De bewoner bezoekt de website en probeert het concept te vatten.",
+    vandaag: "Verward", straks: "Het valt op zijn plek",
+    ideaal: [
+      "Een eigen route voor bewoners: geen investeerdersverhaal ertussen, maar één helder pad dat stap voor stap opbouwt.",
+      "Eén verhaal in lagen: eerst het waarom in mensentaal, details en terminologie pas wanneer de bezoeker er zelf om vraagt.",
+      "Elke projectpagina volgens hetzelfde stramien, zodat vergelijken en begrijpen vanzelf gaat."
+    ],
+    verandert: [
+      { van: "Website niet vanuit bezoekersperspectief, bewoners en investeerders op dezelfde pagina's.", naar: "Aparte flows per rol, elk met een eigen ingang." },
+      { van: "Verwarrende terminologie: cohousing vs. coöperatie, betaalbaar vs. haalbaar.", naar: "Eén helder verhaal in stappen, met consequente woorden." }
+    ],
+    quote: "Vroeger las ik drie pagina's en wist ik nog niet of dit voor mij was. Nu zag ik het in één oogopslag.",
+    wie: "Toekomstige bewoner"
+  },
+  {
+    nr: "Fase 3",
+    naam: "Infosessie",
+    vraag: "“Geweldig, maar dat is veel info.” Enthousiast maar overweldigd na de sessie.",
+    vandaag: "Overweldigd", straks: "Goesting in meer",
+    ideaal: [
+      "Infosessies in lagen: eerst het verhaal en het gevoel, de details volgen in een tweede beweging voor wie verder wil.",
+      "Een vaste, beproefde presentatiestructuur, zodat elke sessie dezelfde kwaliteit heeft, wie ze ook geeft.",
+      "Na de sessie stopt het gesprek niet: een opvolgflow brengt de juiste volgende stap op het juiste moment."
+    ],
+    verandert: [
+      { van: "De 'alles uitleggen'-reflex: te veel info in één sessie.", naar: "Eerst verhaal, dan details. Faseren is respect, niet verbergen." },
+      { van: "Moeilijk om het gesprek te hervatten na de sessie.", naar: "Automatische follow-up die warm houdt en verder helpt." }
+    ],
+    quote: "Ik ging buiten met goesting in plaats van met een vol hoofd. En twee dagen later zat de juiste volgende stap in mijn mailbox.",
+    wie: "Toekomstige bewoner"
+  },
+  {
+    nr: "Fase 4",
+    naam: "Project kiezen",
+    vraag: "“Is dit iets voor mij?” De bewoner vergelijkt projecten en twijfelt.",
+    vandaag: "Twijfelend", straks: "Zeker van mijn keuze",
+    ideaal: [
+      "Elk project toont eerlijk zijn status: open, in aanbouw of bewoond, met een realistische timing erbij.",
+      "Een project-matcher: je geeft je profiel en woonwensen één keer in en ziet meteen welke projecten passen.",
+      "Vergelijken wordt makkelijk: dezelfde info, dezelfde structuur, naast elkaar te leggen."
+    ],
+    verandert: [
+      { van: "Onduidelijk welke projecten nog open zijn.", naar: "Duidelijke statusindicatoren op elke projectpagina." },
+      { van: "Geen manier om projecten te vergelijken.", naar: "Een matcher die profiel en voorkeuren koppelt aan aanbod." }
+    ],
+    quote: "Ik vulde in wat ik zocht en kreeg twee projecten te zien die echt konden. Dat scheelde weken zoeken.",
+    wie: "Toekomstige bewoner"
+  },
+  {
+    nr: "Fase 5",
+    naam: "Kandidaat worden",
+    vraag: "“Ik ga ervoor.” De bewoner stelt zich kandidaat en deelt persoonlijke informatie.",
+    vandaag: "Hoopvol, maar drempelvrees", straks: "Welkom geheten",
+    ideaal: [
+      "Een lage eerste drempel: kandidaat worden begint met interesse tonen, niet met een financieel dossier.",
+      "Het profiel groeit stapsgewijs mee met het vertrouwen: elke stap vraagt net wat er op dat moment nodig is.",
+      "De bewonerscoach kent je verhaal al bij het eerste contact, omdat alles netjes op één plek zit."
+    ],
+    verandert: [
+      { van: "Het formulier vraagt meteen uitgebreide financiële gegevens.", naar: "Instappen zonder drempel, verdiepen op eigen tempo." },
+      { van: "Klantdata inconsistent bijgehouden over verschillende coaches.", naar: "Eén gedeeld beeld van elke kandidaat, voor het hele team." }
+    ],
+    quote: "Ik moest niet meteen mijn loonfiche bovenhalen om gewoon mijn interesse te tonen. Dat maakte het menselijk.",
+    wie: "Toekomstige bewoner"
+  },
+  {
+    nr: "Fase 6",
+    naam: "Financieel gesprek",
+    vraag: "“Kan ik dit betalen?” Het spannendste moment van de hele reis.",
+    vandaag: "Gespannen", straks: "Gerustgesteld",
+    ideaal: [
+      "De calculator als zelf-check vóór het gesprek: thuis, op eigen tempo, zonder iemand te moeten bellen.",
+      "Het gesprek zelf bevestigt in plaats van verrast: coach en kandidaat verfijnen samen een simulatie die de kandidaat al kent.",
+      "Het financiële model visueel uitgelegd: wat betaal ik, wat bouw ik op, en wat betekent dat over 10 en 25 jaar."
+    ],
+    verandert: [
+      { van: "Een intimiderende Excel vol termen als huurgrondslag en scheidingsaandeel.", naar: "De calculator als gesprekstool, in mensentaal." },
+      { van: "Geen self-service: altijd afhankelijk van een coach.", naar: "Zelf simuleren wanneer jij er klaar voor bent." }
+    ],
+    quote: "Ik had thuis al drie scenario's doorgerekend. Het gesprek ging niet meer over of ik het kon betalen, maar over hoe ik het wou aanpakken.",
+    wie: "Toekomstige bewoner"
+  },
+  {
+    nr: "Fase 7",
+    naam: "Engagement",
+    vraag: "“Dit gaat lukken.” Intentieverklaring getekend, aandelen betaald, de bewonersgroep lonkt.",
+    vandaag: "Opgelucht, soms zwevend", straks: "Betrokken en zeker",
+    ideaal: [
+      "Een bewonersportaal als centraal punt: documenten, status en volgende stappen op één plek in plaats van verspreid over mails en drives.",
+      "Complexe juridische documenten krijgen een leesbare samenvatting: eerst begrijpen, dan tekenen.",
+      "De wachttijd wordt gevuld in plaats van uitgezeten: community-momenten met de toekomstige buren, en eerlijke updates over de timing."
+    ],
+    verandert: [
+      { van: "Communicatie via andere kanalen per project: mail, WhatsApp, Notion, Drive.", naar: "Eén portaal, één plek, voor elk project hetzelfde." },
+      { van: "Onzekere en lange wachttijden zonder houvast.", naar: "Transparante mijlpalen en een community die al begint vóór de verhuis." }
+    ],
+    quote: "De wachttijd bleef lang, maar ik wist altijd waar we stonden. En ondertussen kende ik mijn buren al voor we verhuisden.",
+    wie: "Net-ingestapte bewoner"
+  },
+  {
+    nr: "Fase 8",
+    naam: "Bewoner worden",
+    vraag: "“Ik heb een thuis.” Contract getekend, verhuisd, coöperatielid geworden.",
+    vandaag: "Trots", straks: "Trots, en ambassadeur",
+    ideaal: [
+      "De instap wordt gevierd: dit is geen administratieve afronding maar het moment waar alles naartoe werkte.",
+      "Een warme onboarding in de coöperatie: hoe werkt meebeslissen, waar kan ik terecht, wat wordt er van mij verwacht?",
+      "De cirkel is rond: trotse bewoners vertellen hun verhaal en worden de awareness van fase 1 voor de volgende generatie."
+    ],
+    verandert: [
+      { van: "Bewoner geworden, en dan? Weinig structuur na de verhuis.", naar: "Onboarding als coöperatielid, met een duidelijke plek voor vragen." },
+      { van: "De ervaring van bewoners blijft grotendeels onbenut.", naar: "Bewoners als ambassadeurs: hun verhaal voedt de hele reis." }
+    ],
+    quote: "Na twee jaar klopt het nog altijd: het voelt als mijn huis, én als iets dat groter is dan mij. Dat vertel ik aan iedereen die het horen wil.",
+    wie: "Ancien, woont 2+ jaar in een wooncoop-project"
+  }
+];
+
+const fasesEl = document.getElementById("fases");
+const detailEl = document.getElementById("detail");
+let actief = 5; // start op het financiële gesprek: de grootste dip, het sterkste verhaal
+
+function renderFases() {
+  fasesEl.innerHTML = FASES.map((f, i) => `
+    <button class="fase ${i === actief ? "actief" : ""}" onclick="kies(${i})">
+      <span class="nr">${f.nr}</span>
+      <span class="naam">${f.naam}</span>
+    </button>
+  `).join("");
+}
+
+function renderDetail() {
+  const f = FASES[actief];
+  detailEl.innerHTML = `
+    <div class="detail-kop">
+      <div>
+        <span class="nr">${f.nr} van 8</span>
+        <h3>${f.naam}</h3>
+        <p class="vraag">${f.vraag}</p>
+      </div>
+      <div class="emotie-shift">${f.vandaag}<span class="pijl">→</span><span class="naar">${f.straks}</span></div>
+    </div>
+    <div class="detail-body">
+      <div class="kolom">
+        <h4>De ideale ervaring</h4>
+        <ul>${f.ideaal.map(p => `<li>${p}</li>`).join("")}</ul>
+      </div>
+      <div class="kolom">
+        <h4>Wat verandert er</h4>
+        ${f.verandert.map(v => `
+          <div class="verandering">
+            <span class="van">${v.van}</span>
+            <span class="naar">${v.naar}</span>
+          </div>
+        `).join("")}
+        <div class="quote">
+          “${f.quote}”
+          <span class="wie"><b>${f.wie}</b> · voorbeeldquote</span>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function kies(i) { actief = i; renderFases(); renderDetail(); }
+renderFases();
+renderDetail();
+</script>
+</body>
+</html>
