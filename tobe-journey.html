@@ -171,6 +171,36 @@
   }
   .quote .wie b { color: var(--bos); }
 
+  .detail-nav {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    border-top: 1px solid var(--lijn);
+    padding: 16px 24px;
+    background: #fff;
+  }
+  .nav-knop {
+    font-family: "Montserrat", sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--bos);
+    background: none;
+    border: 2px solid var(--lijn);
+    border-radius: 999px;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: all .15s ease;
+    max-width: 48%;
+    text-align: left;
+  }
+  .nav-knop.volgende { text-align: right; margin-left: auto; }
+  .nav-knop:hover { border-color: var(--rood); color: var(--rood); }
+  .nav-knop .pijl { color: var(--rood); font-weight: 700; }
+  .nav-knop .label {
+    display: block; font-size: 10.5px; letter-spacing: .08em; text-transform: uppercase;
+    color: var(--grijs); margin-bottom: 2px;
+  }
+
   .bron {
     margin-bottom: 56px;
     font-family: "Montserrat", sans-serif;
@@ -433,10 +463,28 @@ function renderDetail() {
         </div>
       </div>
     </div>
+    <div class="detail-nav">
+      ${actief > 0 ? `
+        <button class="nav-knop" onclick="kies(${actief - 1})">
+          <span class="label">Vorige fase</span>
+          <span class="pijl">←</span> ${FASES[actief - 1].naam}
+        </button>` : `<span></span>`}
+      ${actief < FASES.length - 1 ? `
+        <button class="nav-knop volgende" onclick="kies(${actief + 1})">
+          <span class="label">Volgende fase</span>
+          ${FASES[actief + 1].naam} <span class="pijl">→</span>
+        </button>` : ``}
+    </div>
   `;
 }
 
 function kies(i) { actief = i; renderFases(); renderDetail(); }
+
+document.addEventListener("keydown", (e) => {
+  if (e.key === "ArrowRight" && actief < FASES.length - 1) kies(actief + 1);
+  if (e.key === "ArrowLeft" && actief > 0) kies(actief - 1);
+});
+
 renderFases();
 renderDetail();
 </script>
