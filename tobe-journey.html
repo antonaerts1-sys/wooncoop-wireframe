@@ -47,13 +47,14 @@
     border-bottom: 1px solid var(--lijn);
   }
   header.site img { height: 52px; }
-  header.site .tag {
+  header.site nav {
     font-family: "Montserrat", sans-serif;
-    font-size: 13px;
-    font-weight: 600;
-    color: var(--grijs);
+    font-size: 13px; font-weight: 600;
+    display: flex; gap: 20px;
   }
-  header.site .tag span { color: var(--rood); }
+  header.site nav a { color: var(--grijs); text-decoration: none; padding-bottom: 3px; }
+  header.site nav a:hover { color: var(--rood); }
+  header.site nav a.actief { color: var(--bos); border-bottom: 2px solid var(--rood); }
 
   .hero { background: var(--mint); padding: 54px 48px 46px; }
   .hero .inner { max-width: 1100px; margin: 0 auto; }
@@ -232,7 +233,10 @@
 
 <header class="site">
   <img src="logo-wooncoop.png" alt="wooncoop logo">
-  <div class="tag">bewonersreis <span>to-be</span> &nbsp;·&nbsp; wooncoop x The Kind Kids</div>
+  <nav>
+    <a href="tobe-journey.html" class="actief">1 · De bewonersreis</a>
+    <a href="ideeen.html">2 · Van inzicht naar actie</a>
+  </nav>
 </header>
 
 <section class="hero">
@@ -473,7 +477,11 @@ function renderDetail() {
         <button class="nav-knop volgende" onclick="kies(${actief + 1})">
           <span class="label">Volgende fase</span>
           ${FASES[actief + 1].naam} <span class="pijl">→</span>
-        </button>` : ``}
+        </button>` : `
+        <a class="nav-knop volgende" href="ideeen.html" style="text-decoration: none; display: inline-block;">
+          <span class="label">Volgende stap</span>
+          Van inzicht naar actie <span class="pijl">→</span>
+        </a>`}
     </div>
   `;
 }

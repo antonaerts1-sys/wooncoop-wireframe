@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>wooncoop — van inzicht naar actie</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Karma:wght@400;700&family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --rood: #DA291C;
+    --mint: #D6E3DE;
+    --mint-licht: #EAF1EE;
+    --sage: #9AB9AD;
+    --bos: #375046;
+    --tekst: #333333;
+    --grijs: #777777;
+    --lijn: #E3E3DD;
+    --creme: #F7F6F2;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: "Karma", serif;
+    color: var(--tekst);
+    background: #fff;
+    line-height: 1.55;
+  }
+  h1, h2, h3, h4, .m { font-family: "Montserrat", sans-serif; font-weight: 700; line-height: 1.3; }
+
+  .demo-banner {
+    background: var(--bos);
+    color: #fff;
+    text-align: center;
+    font-family: "Montserrat", sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    padding: 8px 16px;
+  }
+
+  header.site {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 48px;
+    border-bottom: 1px solid var(--lijn);
+    gap: 16px; flex-wrap: wrap;
+  }
+  header.site img { height: 52px; }
+  header.site nav {
+    font-family: "Montserrat", sans-serif;
+    font-size: 13px; font-weight: 600;
+    display: flex; gap: 20px;
+  }
+  header.site nav a { color: var(--grijs); text-decoration: none; padding-bottom: 3px; }
+  header.site nav a:hover { color: var(--rood); }
+  header.site nav a.actief { color: var(--bos); border-bottom: 2px solid var(--rood); }
+
+  .hero { background: var(--mint); padding: 54px 48px 46px; }
+  .hero .inner { max-width: 1100px; margin: 0 auto; }
+  .hero h1 { font-size: 38px; color: var(--bos); margin-bottom: 12px; }
+  .hero h1 em { font-style: normal; color: var(--rood); }
+  .hero p.lead { font-size: 19px; max-width: 720px; }
+
+  .wrap { max-width: 1100px; margin: 0 auto; padding: 0 48px; }
+
+  .stappen {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px;
+    margin: 36px 0 44px;
+  }
+  .stap {
+    background: var(--creme); border-radius: 12px; padding: 18px 20px;
+  }
+  .stap .nr {
+    font-family: "Montserrat", sans-serif; font-size: 11px; font-weight: 700;
+    letter-spacing: .08em; text-transform: uppercase; color: var(--rood);
+    display: block; margin-bottom: 4px;
+  }
+  .stap .txt { font-size: 15px; }
+
+  section.blok h2 { font-size: 22px; color: var(--bos); margin-bottom: 6px; }
+  section.blok .sub { color: var(--grijs); margin-bottom: 26px; max-width: 720px; }
+
+  .kaarten { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 56px; }
+  .kaart {
+    border: 1px solid var(--lijn); border-radius: 14px; padding: 24px;
+    display: flex; flex-direction: column; gap: 12px;
+  }
+  .kaart-kop { display: flex; gap: 16px; align-items: flex-start; }
+  .kaart-kop svg { flex-shrink: 0; width: 46px; height: 46px; }
+  .kaart h3 { font-size: 17px; color: var(--bos); margin-bottom: 2px; }
+  .kaart .chips { display: flex; gap: 6px; flex-wrap: wrap; }
+  .chip {
+    font-family: "Montserrat", sans-serif; font-size: 10.5px; font-weight: 600;
+    letter-spacing: .05em; text-transform: uppercase;
+    background: var(--mint-licht); color: var(--bos);
+    border-radius: 999px; padding: 3px 10px;
+  }
+  .chip.moeite-klein { background: var(--mint-licht); }
+  .chip.moeite-gemiddeld { background: #F3EBD9; color: #7A5C12; }
+  .chip.moeite-groot { background: #F6E2E0; color: var(--rood); }
+  .kaart p.wat { font-size: 15px; }
+  .kaart p.lost {
+    font-size: 13.5px; color: var(--grijs);
+  }
+  .kaart p.lost b { color: var(--tekst); font-family: "Montserrat", sans-serif; font-size: 12px; font-weight: 600; }
+
+  .kies {
+    border-top: 1px solid var(--lijn); padding-top: 14px; margin-top: auto;
+  }
+  .kies .label {
+    font-family: "Montserrat", sans-serif; font-size: 11px; font-weight: 700;
+    letter-spacing: .08em; text-transform: uppercase; color: var(--grijs);
+    display: block; margin-bottom: 8px;
+  }
+  .keuzes { display: flex; gap: 6px; flex-wrap: wrap; }
+  .keuze {
+    font-family: "Montserrat", sans-serif; font-size: 12.5px; font-weight: 600;
+    border: 2px solid var(--lijn); background: #fff; color: var(--grijs);
+    border-radius: 999px; padding: 6px 14px; cursor: pointer;
+    transition: all .15s ease;
+  }
+  .keuze:hover { border-color: var(--sage); color: var(--bos); }
+  .keuze.aan { background: var(--bos); border-color: var(--bos); color: #fff; }
+  .keuze.aan.niet { background: #fff; border-color: var(--grijs); color: var(--grijs); }
+  .actie-veld { margin-top: 10px; }
+  .actie-veld input {
+    width: 100%; font-family: "Karma", serif; font-size: 14.5px; color: var(--tekst);
+    border: 1px solid var(--lijn); border-radius: 8px; padding: 9px 12px; outline: none;
+  }
+  .actie-veld input:focus { border-color: var(--sage); }
+
+  /* Roadmap */
+  .roadmap-sectie { background: var(--creme); border-radius: 16px; padding: 32px 32px 28px; margin-bottom: 24px; }
+  .roadmap-sectie h2 { font-size: 22px; color: var(--bos); margin-bottom: 4px; }
+  .roadmap-sectie .sub { color: var(--grijs); margin-bottom: 24px; }
+  .roadmap { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  .rm-kolom { background: #fff; border-radius: 12px; padding: 18px; min-height: 140px; }
+  .rm-kolom h3 {
+    font-size: 13px; letter-spacing: .08em; text-transform: uppercase;
+    color: var(--rood); margin-bottom: 4px;
+  }
+  .rm-kolom .wanneer { font-size: 12.5px; color: var(--grijs); margin-bottom: 14px; display: block; }
+  .rm-item {
+    border-left: 3px solid var(--sage); background: var(--mint-licht);
+    border-radius: 0 8px 8px 0; padding: 10px 12px; margin-bottom: 10px;
+  }
+  .rm-item .t { font-family: "Montserrat", sans-serif; font-size: 13px; font-weight: 700; color: var(--bos); display: block; }
+  .rm-item .a { font-size: 13.5px; display: block; margin-top: 2px; }
+  .rm-item .a.leeg { color: var(--grijs); font-style: italic; }
+  .rm-leeg { font-size: 13.5px; color: var(--grijs); font-style: italic; }
+
+  .roadmap-acties { display: flex; gap: 10px; margin-top: 20px; flex-wrap: wrap; }
+  .knop {
+    font-family: "Montserrat", sans-serif; font-size: 13px; font-weight: 600;
+    border-radius: 999px; padding: 10px 22px; cursor: pointer; transition: all .15s ease;
+  }
+  .knop.primair { background: var(--rood); border: 2px solid var(--rood); color: #fff; }
+  .knop.primair:hover { background: #B81F14; border-color: #B81F14; }
+  .knop.secundair { background: #fff; border: 2px solid var(--lijn); color: var(--bos); }
+  .knop.secundair:hover { border-color: var(--rood); color: var(--rood); }
+
+  .vervolg {
+    text-align: center; padding: 8px 0 56px; font-size: 15px; color: var(--grijs); max-width: 620px; margin: 0 auto;
+  }
+  .vervolg b { color: var(--bos); font-family: "Montserrat", sans-serif; font-size: 14px; }
+
+  footer.site {
+    background: var(--mint);
+    padding: 26px 48px;
+    font-size: 14px;
+    color: var(--bos);
+    display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap;
+  }
+  footer.site .m { font-size: 13px; }
+
+  @media (max-width: 900px) {
+    header.site, .hero, footer.site { padding-left: 20px; padding-right: 20px; }
+    .wrap { padding: 0 20px; }
+    .hero h1 { font-size: 29px; }
+    .stappen, .kaarten, .roadmap { grid-template-columns: 1fr; }
+  }
+
+  @media print {
+    .demo-banner, header.site nav, .stappen, .kaarten, .roadmap-acties, .vervolg, footer.site, section.blok .sub, #ideeen-titel, #ideeen-sub { display: none; }
+    .roadmap-sectie { background: #fff; padding: 0; }
+    .hero { padding: 20px 0; background: #fff; }
+    .hero h1 { font-size: 26px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="demo-banner">Concept ter illustratie — de ideeën komen uit de workshop van 12 mei, de interviews scherpen ze straks aan</div>
+
+<header class="site">
+  <img src="logo-wooncoop.png" alt="wooncoop logo">
+  <nav>
+    <a href="tobe-journey.html">1 · De bewonersreis</a>
+    <a href="ideeen.html" class="actief">2 · Van inzicht naar actie</a>
+  </nav>
+</header>
+
+<section class="hero">
+  <div class="inner">
+    <h1>Van inzicht<br>naar <em>actie</em></h1>
+    <p class="lead">De reis toonde waar het knelt. Dit zijn de ideeën die daaruit volgen: geen beslissingen, maar mogelijkheden. Jullie bepalen wat eerst komt, wat later mag, en wat de eerstvolgende stap is. Zo ontstaat jullie eigen roadmap naar een betere bewonersreis.</p>
+  </div>
+</section>
+
+<div class="wrap">
+  <div class="stappen">
+    <div class="stap"><span class="nr">Stap 1</span><span class="txt">Bekijk de ideeën. Elk idee lost een pijnpunt uit de reis op.</span></div>
+    <div class="stap"><span class="nr">Stap 2</span><span class="txt">Kies per idee: nu, straks, later, of niet nu. Wees streng: niet alles kan eerst.</span></div>
+    <div class="stap"><span class="nr">Stap 3</span><span class="txt">Noteer de eerstvolgende actie. Klein en concreet: wie doet wat deze maand?</span></div>
+  </div>
+
+  <section class="blok">
+    <h2 id="ideeen-titel">De ideeën</h2>
+    <p class="sub" id="ideeen-sub">Acht mogelijkheden uit de workshop, elk gekoppeld aan een fase van de reis. De moeite-inschatting is een eerste inschatting, geen offerte.</p>
+    <div class="kaarten" id="kaarten"></div>
+  </section>
+
+  <section class="roadmap-sectie" id="roadmap-print">
+    <h2>Jullie roadmap</h2>
+    <p class="sub">Groeit vanzelf mee met de keuzes hierboven. Kiezen is de helft, de actie eronder is de andere helft.</p>
+    <div class="roadmap" id="roadmap"></div>
+    <div class="roadmap-acties">
+      <button class="knop primair" onclick="window.print()">Bewaar als PDF</button>
+      <button class="knop secundair" onclick="resetKeuzes()">Begin opnieuw</button>
+    </div>
+  </section>
+
+  <p class="vervolg">
+    <b>En dan?</b><br>
+    Deel jullie roadmap gerust met ons. We denken graag mee over de eerste stap, en over waar een klein duwtje het verschil maakt.
+  </p>
+</div>
+
+<footer class="site">
+  <div>
+    <div class="m">wooncoop x The Kind Kids — customer journey sprint</div>
+    Van inzicht naar actie · concept juli 2026
+  </div>
+  <div>huren bij jezelf</div>
+</footer>
+
+<script>
+// Handgetekende iconen in Wooncoop-rood
+const ICOON = {
+  verhaal: `<svg viewBox="0 0 46 46" fill="none" stroke="#DA291C" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 10 C6 8, 8 7, 12 7 L34 8 C38 8, 40 10, 39 14 L39 26 C39 30, 37 31, 33 31 L18 31 L10 38 L11 31 C8 31, 6 29, 6 26 Z"/><path d="M13 16 L32 16 M13 22 L26 22"/></svg>`,
+  route: `<svg viewBox="0 0 46 46" fill="none" stroke="#DA291C" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 40 C8 28, 16 26, 23 24 C30 22, 38 20, 38 8"/><circle cx="8" cy="40" r="3"/><circle cx="38" cy="8" r="3"/><path d="M20 12 C24 14, 26 17, 25 21 M14 33 C18 33, 21 31, 22 28"/></svg>`,
+  status: `<svg viewBox="0 0 46 46" fill="none" stroke="#DA291C" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 39 L7 20 L23 8 L39 20 L39 39 Z"/><path d="M7 39 L39 39"/><circle cx="23" cy="26" r="5"/><path d="M21 26 L22.5 28 L26 24"/></svg>`,
+  lagen: `<svg viewBox="0 0 46 46" fill="none" stroke="#DA291C" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 6 L41 15 L23 24 L5 15 Z"/><path d="M8 23 L23 31 L38 23"/><path d="M11 30 L23 37 L35 30"/></svg>`,
+  matcher: `<svg viewBox="0 0 46 46" fill="none" stroke="#DA291C" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="19" cy="19" r="11"/><path d="M27 27 L38 38"/><path d="M14 19 L18 23 L25 15"/></svg>`,
+  drempel: `<svg viewBox="0 0 46 46" fill="none" stroke="#DA291C" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 38 L14 38 L14 30 L22 30 L22 22 L30 22 L30 14 L40 14"/><path d="M33 8 L40 14 L34 20"/></svg>`,
+  calculator: `<svg viewBox="0 0 46 46" fill="none" stroke="#DA291C" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="10" y="6" width="26" height="34" rx="3"/><path d="M15 12 L31 12 M15 20 L19 20 M23 20 L27 20 M15 27 L19 27 M23 27 L27 27 M15 34 L27 34"/></svg>`,
+  portaal: `<svg viewBox="0 0 46 46" fill="none" stroke="#DA291C" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 40 L9 16 C9 9, 15 5, 23 5 C31 5, 37 9, 37 16 L37 40"/><path d="M6 40 L40 40"/><path d="M18 40 L18 27 L28 27 L28 40"/><circle cx="23" cy="16" r="3"/></svg>`
+};
+
+const IDEEEN = [
+  {
+    id: "verhalenbank",
+    icoon: "verhaal",
+    titel: "Verhalenbank van bewoners",
+    fase: "Fase 1 & 8",
+    moeite: "gemiddeld",
+    wat: "Echte bewoners vertellen hun verhaal in korte video's en quotes, herkenbaar per levensfase. Anciens worden ambassadeurs: de trots van fase 8 wordt de awareness van fase 1.",
+    lost: "Beperkt bereik buiten de cohousing-bubbel; de ervaring van bewoners blijft onbenut."
+  },
+  {
+    id: "routes",
+    icoon: "route",
+    titel: "Eigen route per doelgroep",
+    fase: "Fase 2",
+    moeite: "groot",
+    wat: "De website krijgt aparte ingangen voor bewoners, investeerders en achterban. Elk pad vertelt het verhaal in lagen: eerst het waarom, details op aanvraag.",
+    lost: "Vier doelgroepen op dezelfde pagina's; verwarrende terminologie; niemand voelt zich aangesproken."
+  },
+  {
+    id: "projectstatus",
+    icoon: "status",
+    titel: "Uniforme projectpagina's met status",
+    fase: "Fase 2 & 4",
+    moeite: "gemiddeld",
+    wat: "Elk project volgens hetzelfde stramien, met een eerlijke statusindicator: open, in aanbouw of bewoond, plus realistische timing.",
+    lost: "Onduidelijk welke projecten nog open zijn; projectpagina's zonder uniform template."
+  },
+  {
+    id: "infosessie",
+    icoon: "lagen",
+    titel: "Infosessie in lagen, met opvolging",
+    fase: "Fase 3",
+    moeite: "klein",
+    wat: "Eerst het verhaal, dan pas de details. Na de sessie volgt automatisch de juiste volgende stap in de mailbox, zodat het gesprek niet stilvalt.",
+    lost: "De 'alles uitleggen'-reflex; enthousiasme dat wegzakt omdat opvolging ontbreekt."
+  },
+  {
+    id: "matcher",
+    icoon: "matcher",
+    titel: "Project-matcher",
+    fase: "Fase 4",
+    moeite: "gemiddeld",
+    wat: "Kandidaten geven één keer hun profiel en woonwensen in en zien welke projecten passen. Komt er iets nieuws bij dat past, dan krijgen ze bericht.",
+    lost: "Geen manier om projecten te vergelijken; interesse verwatert tussen contactmomenten."
+  },
+  {
+    id: "drempel",
+    icoon: "drempel",
+    titel: "Instappen zonder drempel",
+    fase: "Fase 5",
+    moeite: "klein",
+    wat: "Kandidaat worden begint met interesse tonen, niet met een financieel dossier. Het profiel groeit stapsgewijs mee met het vertrouwen.",
+    lost: "Het formulier vraagt meteen uitgebreide financiële gegevens; hoge drempel om persoonlijke info te delen."
+  },
+  {
+    id: "calculator",
+    icoon: "calculator",
+    titel: "Calculator als gesprekstool",
+    fase: "Fase 6",
+    moeite: "klein",
+    wat: "Kandidaten rekenen thuis zelf hun scenario door en komen voorbereid naar het gesprek. De coach verfijnt in plaats van te verrassen. Het prototype bestaat al.",
+    lost: "De intimiderende Excel; hoge uitval na het financiële gesprek."
+  },
+  {
+    id: "portaal",
+    icoon: "portaal",
+    titel: "Bewonersportaal",
+    fase: "Fase 7 & 8",
+    moeite: "groot",
+    wat: "Eén plek voor documenten, status, mijlpalen en de bewonersgroep. De wachttijd wordt gevuld in plaats van uitgezeten, en routinevragen lossen zichzelf op.",
+    lost: "Versnipperde kanalen per project; onzekere wachttijden zonder houvast; te weinig tijd voor echt contact."
+  }
+];
+
+const OPTIES = ["Nu", "Straks", "Later", "Niet nu"];
+const KOLOMMEN = [
+  { naam: "Nu", wanneer: "de komende 3 maanden" },
+  { naam: "Straks", wanneer: "dit jaar nog" },
+  { naam: "Later", wanneer: "op de langere baan" }
+];
+
+let staat = JSON.parse(localStorage.getItem("wc-roadmap") || "{}");
+
+function bewaar() { localStorage.setItem("wc-roadmap", JSON.stringify(staat)); }
+
+function renderKaarten() {
+  document.getElementById("kaarten").innerHTML = IDEEEN.map(idee => {
+    const s = staat[idee.id] || {};
+    return `
+    <div class="kaart">
+      <div class="kaart-kop">
+        ${ICOON[idee.icoon]}
+        <div>
+          <h3>${idee.titel}</h3>
+          <div class="chips">
+            <span class="chip">${idee.fase}</span>
+            <span class="chip moeite-${idee.moeite}">Moeite: ${idee.moeite}</span>
+          </div>
+        </div>
+      </div>
+      <p class="wat">${idee.wat}</p>
+      <p class="lost"><b>Lost op:</b> ${idee.lost}</p>
+      <div class="kies">
+        <span class="label">Wanneer pakken jullie dit aan?</span>
+        <div class="keuzes">
+          ${OPTIES.map(o => `<button class="keuze ${s.keuze === o ? "aan" : ""} ${o === "Niet nu" ? "niet" : ""}" onclick="kiesOptie('${idee.id}', '${o}')">${o}</button>`).join("")}
+        </div>
+        ${s.keuze && s.keuze !== "Niet nu" ? `
+        <div class="actie-veld">
+          <input type="text" placeholder="Eerstvolgende actie, bv. 'Ann verzamelt 3 bewonersverhalen'" value="${(s.actie || "").replace(/"/g, "&quot;")}" onchange="zetActie('${idee.id}', this.value)">
+        </div>` : ""}
+      </div>
+    </div>`;
+  }).join("");
+}
+
+function renderRoadmap() {
+  document.getElementById("roadmap").innerHTML = KOLOMMEN.map(k => {
+    const items = IDEEEN.filter(i => (staat[i.id] || {}).keuze === k.naam);
+    return `
+    <div class="rm-kolom">
+      <h3>${k.naam}</h3>
+      <span class="wanneer">${k.wanneer}</span>
+      ${items.length ? items.map(i => `
+        <div class="rm-item">
+          <span class="t">${i.titel}</span>
+          <span class="a ${staat[i.id].actie ? "" : "leeg"}">${staat[i.id].actie || "nog geen actie bepaald"}</span>
+        </div>`).join("") : `<span class="rm-leeg">nog niets gekozen</span>`}
+    </div>`;
+  }).join("");
+}
+
+function kiesOptie(id, optie) {
+  staat[id] = staat[id] || {};
+  staat[id].keuze = staat[id].keuze === optie ? null : optie;
+  bewaar(); renderKaarten(); renderRoadmap();
+}
+
+function zetActie(id, waarde) {
+  staat[id] = staat[id] || {};
+  staat[id].actie = waarde.trim();
+  bewaar(); renderRoadmap();
+}
+
+function resetKeuzes() {
+  staat = {};
+  bewaar(); renderKaarten(); renderRoadmap();
+}
+
+renderKaarten();
+renderRoadmap();
+</script>
+</body>
+</html>
