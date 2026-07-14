@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>wooncoop — wat we leerden</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Karma:wght@400;700&family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --rood: #DA291C;
+    --mint: #D6E3DE;
+    --mint-licht: #EAF1EE;
+    --sage: #9AB9AD;
+    --bos: #375046;
+    --tekst: #333333;
+    --grijs: #777777;
+    --lijn: #E3E3DD;
+    --creme: #F7F6F2;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: "Karma", serif;
+    color: var(--tekst);
+    background: #fff;
+    line-height: 1.55;
+  }
+  h1, h2, h3, h4, .m { font-family: "Montserrat", sans-serif; font-weight: 700; line-height: 1.3; }
+
+  .demo-banner {
+    background: var(--bos);
+    color: #fff;
+    text-align: center;
+    font-family: "Montserrat", sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    padding: 8px 16px;
+  }
+
+  header.site {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 48px;
+    border-bottom: 1px solid var(--lijn);
+    gap: 16px; flex-wrap: wrap;
+  }
+  header.site img { height: 52px; }
+  header.site nav {
+    font-family: "Montserrat", sans-serif;
+    font-size: 13px; font-weight: 600;
+    display: flex; gap: 20px;
+  }
+  header.site nav a { color: var(--grijs); text-decoration: none; padding-bottom: 3px; }
+  header.site nav a:hover { color: var(--rood); }
+  header.site nav a.actief { color: var(--bos); border-bottom: 2px solid var(--rood); }
+
+  .hero { background: var(--mint); padding: 58px 48px 52px; }
+  .hero .inner { max-width: 1100px; margin: 0 auto; }
+  .hero h1 { font-size: 40px; color: var(--bos); margin-bottom: 14px; }
+  .hero h1 em { font-style: normal; color: var(--rood); }
+  .hero p.lead { font-size: 19px; max-width: 740px; }
+
+  .wrap { max-width: 1100px; margin: 0 auto; padding: 0 48px; }
+
+  section.blok { padding: 48px 0 0; }
+  section.blok > h2 { font-size: 24px; color: var(--bos); margin-bottom: 6px; }
+  section.blok > .sub { color: var(--grijs); margin-bottom: 28px; max-width: 760px; }
+  .kicker {
+    font-family: "Montserrat", sans-serif; font-size: 11px; font-weight: 700;
+    letter-spacing: .12em; text-transform: uppercase; color: var(--rood);
+    display: block; margin-bottom: 6px;
+  }
+
+  /* Verloop van het onderzoek */
+  .verloop { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; position: relative; }
+  .stap {
+    background: var(--creme); border-radius: 12px; padding: 20px 22px; position: relative;
+  }
+  .stap.gedaan { background: var(--mint-licht); }
+  .stap .wanneer {
+    font-family: "Montserrat", sans-serif; font-size: 11px; font-weight: 700;
+    letter-spacing: .08em; text-transform: uppercase; color: var(--rood);
+    display: block; margin-bottom: 6px;
+  }
+  .stap h3 { font-size: 15px; color: var(--bos); margin-bottom: 5px; }
+  .stap p { font-size: 13.5px; color: var(--grijs); }
+  .stap .status {
+    display: inline-block; margin-top: 10px;
+    font-family: "Montserrat", sans-serif; font-size: 10.5px; font-weight: 700;
+    letter-spacing: .06em; text-transform: uppercase;
+    border-radius: 999px; padding: 3px 10px;
+  }
+  .stap.gedaan .status { background: var(--bos); color: #fff; }
+  .stap:not(.gedaan) .status { background: #fff; border: 1.5px solid var(--lijn); color: var(--grijs); }
+
+  /* Inzichten */
+  .inzichten { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .inzicht {
+    background: var(--creme); border-radius: 14px; padding: 28px 30px;
+    display: flex; gap: 22px; align-items: flex-start;
+  }
+  .inzicht:last-child { grid-column: 1 / -1; }
+  .inzicht .nr {
+    font-family: "Montserrat", sans-serif; font-size: 38px; font-weight: 700;
+    color: var(--sage); line-height: 1; flex-shrink: 0;
+  }
+  .inzicht h3 { font-size: 17px; color: var(--bos); margin-bottom: 7px; }
+  .inzicht p { font-size: 15px; }
+  .inzicht p b { font-family: "Montserrat", sans-serif; font-size: 13.5px; color: var(--rood); }
+
+  /* CTA */
+  .cta-strook {
+    background: var(--bos); border-radius: 16px;
+    padding: 36px 40px; margin: 52px 0 56px;
+    display: flex; justify-content: space-between; align-items: center; gap: 24px; flex-wrap: wrap;
+  }
+  .cta-strook h2 { color: #fff; font-size: 22px; margin-bottom: 4px; }
+  .cta-strook p { color: var(--mint); font-size: 15px; max-width: 560px; }
+  .cta-knop {
+    font-family: "Montserrat", sans-serif; font-size: 14px; font-weight: 700;
+    background: var(--rood); color: #fff; text-decoration: none;
+    border-radius: 999px; padding: 14px 28px; white-space: nowrap;
+    transition: background .15s ease;
+  }
+  .cta-knop:hover { background: #B81F14; }
+
+  footer.site {
+    background: var(--mint);
+    padding: 26px 48px;
+    font-size: 14px;
+    color: var(--bos);
+    display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap;
+  }
+  footer.site .m { font-size: 13px; }
+
+  @media (max-width: 900px) {
+    header.site, .hero, footer.site { padding-left: 20px; padding-right: 20px; }
+    .wrap { padding: 0 20px; }
+    .hero h1 { font-size: 30px; }
+    .verloop, .inzichten { grid-template-columns: 1fr; }
+    .cta-strook { padding: 28px 24px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="demo-banner">Concept ter illustratie — gebouwd op de workshop van 12 mei, nog te valideren met de bewonersinterviews</div>
+
+<header class="site">
+  <img src="logo-wooncoop.png" alt="wooncoop logo">
+  <nav>
+    <a href="inzichten.html" class="actief">1 · Wat we leerden</a>
+    <a href="tobe-journey.html">2 · De bewonersreis</a>
+    <a href="ideeen.html">3 · Van inzicht naar actie</a>
+  </nav>
+</header>
+
+<section class="hero">
+  <div class="inner">
+    <h1>Wat we samen<br><em>leerden</em></h1>
+    <p class="lead">Dit naslagwerk bundelt het onderzoek van wooncoop en The Kind Kids naar de reis van toekomstige bewoners: waar ze wooncoop leren kennen, waar ze twijfelen, waar ze afhaken en waar ze thuiskomen. Deze pagina geeft de basis. Daarna volgt de reis zelf, fase per fase.</p>
+  </div>
+</section>
+
+<div class="wrap">
+
+  <section class="blok">
+    <span class="kicker">Het onderzoek</span>
+    <h2>Hoe dit beeld tot stand kwam</h2>
+    <p class="sub">Stap voor stap, samen met het team. En het scherpste moet nog komen: de stemmen van de bewoners zelf.</p>
+    <div class="verloop">
+      <div class="stap gedaan">
+        <span class="wanneer">April 2026</span>
+        <h3>Gesprekken met het team</h3>
+        <p>Diepte-interviews met Ann (bewonerscoach) en Lukas (financieel coördinator) over hoe de reis vandaag echt loopt.</p>
+        <span class="status">Gebeurd</span>
+      </div>
+      <div class="stap gedaan">
+        <span class="wanneer">12 mei 2026</span>
+        <h3>As-is workshop</h3>
+        <p>Samen de volledige reis in kaart gebracht: acht fases, met per fase de acties, kanalen, emoties en pijnpunten.</p>
+        <span class="status">Gebeurd</span>
+      </div>
+      <div class="stap gedaan">
+        <span class="wanneer">Juli 2026</span>
+        <h3>Dit naslagwerk</h3>
+        <p>De workshop-inzichten vertaald naar een as-is en een eerste to-be, als levend werkdocument.</p>
+        <span class="status">Waar je nu bent</span>
+      </div>
+      <div class="stap">
+        <span class="wanneer">Volgende stap</span>
+        <h3>Acht bewonersinterviews</h3>
+        <p>Net-ingestapte bewoners, afgehaakte kandidaten en anciens toetsen dit beeld aan hun echte ervaring.</p>
+        <span class="status">Gepland</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="blok">
+    <span class="kicker">De basis</span>
+    <h2>Vijf dingen die we leerden</h2>
+    <p class="sub">Deze inzichten kwamen telkens terug, in de workshop en in de gesprekken. Ze verklaren waarom de reis loopt zoals ze loopt, en ze zijn de rode draad door alles wat volgt.</p>
+    <div class="inzichten">
+      <div class="inzicht">
+        <span class="nr">1</span>
+        <div>
+          <h3>Geen tekort aan informatie, wel aan fasering</h3>
+          <p>De "alles uitleggen"-reflex komt voort uit een waarde (transparantie), niet uit een tekort. Maar te veel ineens overweldigt, en schrikt net de mensen af die wooncoop wil bereiken. <b>Faseren is respect, niet verbergen.</b></p>
+        </div>
+      </div>
+      <div class="inzicht">
+        <span class="nr">2</span>
+        <div>
+          <h3>Vóór het gesprek zit de drempel, erna de zwaarte</h3>
+          <p>Voor het persoonlijk contact haken mensen af zonder dat iemand weet waarom. Eens in gesprek is de conversie hoog, maar voelt het financiële luik zwaar en intimiderend. <b>Twee verschillende problemen, twee verschillende oplossingen.</b></p>
+        </div>
+      </div>
+      <div class="inzicht">
+        <span class="nr">3</span>
+        <div>
+          <h3>Wat menselijk is werkt, wat geformaliseerd is hapert</h3>
+          <p>Het gesprek met de coach en de verhalen van echte bewoners overtuigen. Brochures, FAQ's en projectpagina's lopen vast. <b>De to-be bouwt verder op wat al werkt: mensen.</b></p>
+        </div>
+      </div>
+      <div class="inzicht">
+        <span class="nr">4</span>
+        <div>
+          <h3>Eén website, vier doelgroepen</h3>
+          <p>Bewoners, investeerders, achterban en sympathisanten delen dezelfde pagina's. Daardoor klopt het verhaal voor niemand helemaal. <b>Elke doelgroep verdient een eigen route.</b></p>
+        </div>
+      </div>
+      <div class="inzicht">
+        <span class="nr">5</span>
+        <div>
+          <h3>Sturen op buikgevoel, want de data ontbreekt</h3>
+          <p>Er is geen registratie van waar mensen wooncoop leren kennen of waarom ze afhaken. Elke verbetering is vandaag een hypothese, geen conclusie. <b>Daarom hoort bij elke oplossing in dit naslagwerk ook: meten.</b></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="cta-strook">
+    <div>
+      <h2>Klaar voor de reis zelf?</h2>
+      <p>Acht fases, van de eerste kennismaking tot trotse bewoner-coöperant. Per fase de ervaring van vandaag naast de ideale ervaring van morgen.</p>
+    </div>
+    <a class="cta-knop" href="tobe-journey.html">Bekijk de bewonersreis →</a>
+  </div>
+</div>
+
+<footer class="site">
+  <div>
+    <div class="m">wooncoop x The Kind Kids — customer journey sprint</div>
+    Naslagwerk bewonersreis · concept juli 2026
+  </div>
+  <div>huren bij jezelf</div>
+</footer>
+
+</body>
+</html>
